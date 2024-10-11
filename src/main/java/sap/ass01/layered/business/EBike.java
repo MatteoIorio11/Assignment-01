@@ -1,6 +1,4 @@
-package sap.ass01.bbom;
-
-import java.util.Optional;
+package sap.ass01.layered.business;
 
 public class EBike  {
 
@@ -8,7 +6,7 @@ public class EBike  {
 	public enum EBikeState { AVAILABLE, IN_USE, MAINTENANCE}	
 	private EBikeState state;
 	private P2d loc;
-	private V2d direction; 
+	private V2d direction;
 	private double speed;
 	private int batteryLevel;  /* 0..100 */
 	

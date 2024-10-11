@@ -1,4 +1,4 @@
-package sap.ass01.bbom;
+package sap.ass01.layered.business;
 
 /**
  *

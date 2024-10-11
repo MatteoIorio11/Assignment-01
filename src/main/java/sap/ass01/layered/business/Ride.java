@@ -1,4 +1,7 @@
-package sap.ass01.bbom;
+package sap.ass01.layered.business;
+
+import sap.ass01.layered.presentation.RideSimulationControlPanel;
+import sap.ass01.layered.presentation.EBikeApp;
 
 import java.util.Date;
 import java.util.Optional;

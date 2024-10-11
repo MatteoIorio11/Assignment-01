@@ -1,6 +1,6 @@
-package sap.ass01.bbom;
+package sap.ass01.layered.business;
 
-import java.util.Random;
+import sap.ass01.layered.presentation.EBikeApp;
 
 public class RideSimulation extends Thread {
 	

@@ -1,4 +1,7 @@
-package sap.ass01.bbom;
+package sap.ass01.layered.presentation;
+
+import sap.ass01.layered.business.Ride;
+import sap.ass01.layered.presentation.EBikeApp;
 
 import javax.swing.*;
 import java.awt.*;

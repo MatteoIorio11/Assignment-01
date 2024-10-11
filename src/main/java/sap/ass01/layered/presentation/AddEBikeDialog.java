@@ -1,4 +1,6 @@
-package sap.ass01.bbom;
+package sap.ass01.layered.presentation;
+
+import sap.ass01.layered.business.P2d;
 
 import javax.swing.*;
 import java.awt.*;
