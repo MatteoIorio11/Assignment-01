@@ -2,7 +2,7 @@ package sap.ass01.layered.business;
 
 import sap.ass01.layered.persistence.Repository;
 
-public class User {
+public class User implements java.io.Serializable{
 
 	private String id;
 	private int credit;
