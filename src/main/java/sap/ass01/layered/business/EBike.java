@@ -40,6 +40,7 @@ public class EBike  {
 			batteryLevel = 0;
 			state = EBikeState.MAINTENANCE;
 		}
+		// NOTE: call the persistence layer
 	}
 
 	

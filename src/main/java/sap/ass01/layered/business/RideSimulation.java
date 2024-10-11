@@ -69,7 +69,8 @@ public class RideSimulation extends Thread {
 				user.decreaseCredit(1);
 				lastTimeDecreasedCredit = System.currentTimeMillis();
 			}
-			
+
+			// NOTE: Notify the EBikeApp about the new position
 			app.refreshView();
 
 			

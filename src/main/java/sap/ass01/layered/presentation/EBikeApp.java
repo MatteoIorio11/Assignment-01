@@ -21,7 +21,7 @@ import javax.swing.*;
 
 
 public class EBikeApp extends JFrame implements ActionListener {
-    
+   	// NOTE: Observers the RideSimulation
     private VisualiserPanel centralPanel;
     private JButton addUserButton, addEBikeButton, startRideButton;
     private ConcurrentHashMap<String, EBike> bikes;
