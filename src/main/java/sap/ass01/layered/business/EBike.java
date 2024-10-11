@@ -1,9 +1,8 @@
 package sap.ass01.layered.business;
 
 public class EBike  {
-
 	private String id;
-	public enum EBikeState { AVAILABLE, IN_USE, MAINTENANCE}	
+	public enum EBikeState { AVAILABLE, IN_USE, MAINTENANCE}
 	private EBikeState state;
 	private P2d loc;
 	private V2d direction;
