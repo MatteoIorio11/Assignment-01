@@ -7,5 +7,5 @@ import java.io.Serializable;
  * @param <O> the serialized value type of this object.
  */
 public interface SerializableEntity<O> extends Serializable {
-    O getSerializedObject();
+    O serialize();
 }
