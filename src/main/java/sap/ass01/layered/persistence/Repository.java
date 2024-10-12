@@ -2,7 +2,7 @@ package sap.ass01.layered.persistence;
 
 import java.io.Serializable;
 
-public interface Repository {
+public interface Repository<T extends SerializableEntity<?>> {
     // TODO: CRUD operations
-    void saveAll(Iterable<SerializableEntity> objects);
+    void saveAll(Iterable<T> objects);
 }
