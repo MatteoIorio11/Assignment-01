@@ -1,13 +1,10 @@
 package sap.ass01.layered.persistence;
 
-public class UserRepository implements Repository<Void>{
-    @Override
-    public void saveAll(Iterable<Void> objects) {
+import sap.ass01.layered.business.User;
 
-    }
 
-    @Override
-    public void save(Void object) {
-
+public class UserRepository {
+    public static void main(String[] args) {
+        final User user = new User("miao");
     }
 }
