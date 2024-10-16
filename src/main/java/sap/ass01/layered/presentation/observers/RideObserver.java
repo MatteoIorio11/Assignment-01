@@ -2,10 +2,7 @@ package sap.ass01.layered.presentation.observers;
 
 import sap.ass01.layered.business.Ride;
 
-public class RideObserver implements InputObserver<Ride> {
-
+public interface RideObserver extends InputObserver<Ride> {
     @Override
-    public void notifyUpdateRequested(Ride newValue) {
-
-    }
+    void notifyUpdateRequested(Ride newValue);
 }
