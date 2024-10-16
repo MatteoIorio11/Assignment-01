@@ -1,9 +1,6 @@
 package sap.ass01.layered.presentation;
 
-import sap.ass01.layered.business.EBike;
-import sap.ass01.layered.business.P2d;
-import sap.ass01.layered.business.Ride;
-import sap.ass01.layered.business.User;
+import sap.ass01.layered.business.*;
 
 import java.awt.BorderLayout;
 import java.awt.Graphics;
@@ -37,9 +34,9 @@ public class EBikeApp extends JFrame implements ActionListener {
 
     
     protected void setupModel() {
-        bikes = new ConcurrentHashMap<String, EBike>();
-        users = new HashMap<String, User>();
-        rides = new HashMap<String, Ride>();
+        bikes = new ConcurrentHashMap<String, EBikeImpl>();
+        users = new HashMap<String, UserImpl>();
+        rides = new HashMap<String, RideImpl>();
         
         rideId = 0;
         this.addUser("u1");
@@ -86,7 +83,7 @@ public class EBikeApp extends JFrame implements ActionListener {
     }
         
     public void addEBike(String id, P2d loc) {
-    	EBike bike = new EBike(id);
+    	EBike bike = new EBikeImpl(id);
     	bike.updateLocation(loc);
     	bikes.put(id, bike);
     	log("added new EBike " + bike);
@@ -98,7 +95,7 @@ public class EBikeApp extends JFrame implements ActionListener {
     }
 
     public void addUser(String id) {
-    	User user = new User(id);
+    	User user = new UserImpl(id);
     	user.rechargeCredit(100);
     	users.put(id, user);
     	log("added new User " + user);
@@ -111,8 +108,8 @@ public class EBikeApp extends JFrame implements ActionListener {
     	
     	var b = bikes.get(bikeId);
     	var u = users.get(userId);
-    	var ride = new Ride(idRide, u, b);
-    	b.updateState(EBike.EBikeState.IN_USE);
+    	var ride = new RideImpl(idRide, u, b);
+    	b.updateState(EBikeImpl.EBikeState.IN_USE);
     	rides.put(idRide, ride);
     	ride.start(this);
         
