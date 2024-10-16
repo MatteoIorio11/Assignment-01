@@ -29,7 +29,7 @@ public class AddEBikeDialog extends JDialog {
     private JTextField yCoordField;
     private JButton okButton;
     private JButton cancelButton;
-    private EBikeApp app;
+    private final EBikeApp app;
     
     public AddEBikeDialog(EBikeApp owner) {
         super(owner, "Adding E-Bike", true);
@@ -72,9 +72,9 @@ public class AddEBikeDialog extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Implement OK button behavior here
-                String id = idField.getText();
-                String xCoord = xCoordField.getText();
-                String yCoord = yCoordField.getText();
+                final String id = idField.getText();
+                final String xCoord = xCoordField.getText();
+                final String yCoord = yCoordField.getText();
                 app.addEBike(id, new P2d(Integer.parseInt(xCoord), Integer.parseInt(yCoord)));
                 dispose();
             }
