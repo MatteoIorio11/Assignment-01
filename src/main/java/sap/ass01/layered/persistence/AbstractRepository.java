@@ -1,8 +1,11 @@
 package sap.ass01.layered.persistence;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Objects;
 import java.util.Optional;
 
-public class AbstractRepository<T extends SerializableEntity<?>, K> implements Repository<T, K> {
+public abstract class AbstractRepository<T, K> implements Repository<T, K> {
     private final Serializer<T, K> serializer;
     public AbstractRepository(final Serializer<T, K> serializer){
         this.serializer = serializer;
@@ -23,7 +26,7 @@ public class AbstractRepository<T extends SerializableEntity<?>, K> implements R
     }
 
     @Override
-    public Optional<T> getObject(K objectKey) {
+    public Optional<T> getObjectByID(K objectKey) {
         return this.serializer.readByID(objectKey);
     }
 }
