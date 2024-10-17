@@ -24,10 +24,6 @@ public class RideImpl implements Ride {
 		this.ebike = ebike;
 	}
 	
-	@Override
-	public String getId() {
-		return id;
-	}
 
 	@Override
 	public void start(EBikeApp app) {
@@ -74,5 +70,10 @@ public class RideImpl implements Ride {
 	
 	public String toString() {
 		return "{ id: " + this.id + ", user: " + user.getId() + ", bike: " + ebike.getId() + " }";
+	}
+
+	@Override
+	public String getId() {
+		return this.id;
 	}
 }

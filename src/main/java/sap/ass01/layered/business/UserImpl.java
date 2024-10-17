@@ -1,15 +1,26 @@
 package sap.ass01.layered.business;
 
-public class UserImpl implements User {
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeId;
+import sap.ass01.layered.persistence.Key;
 
+public class UserImpl implements User {
+	@JsonProperty("id")  // Ensure the 'id' field is serialized
 	private final String id;
-	private int credit;
-	public UserImpl(String id) {
+
+	@JsonProperty("credit")  // Ensure the 'credit' field is serialized
+	private int credit;	public UserImpl(String id) {
+		this(id, 0);
+	}
+	@JsonCreator()
+	public UserImpl(@JsonProperty("id") String id, @JsonProperty("credit") int credit) {
 		this.id = id;
-		this.credit = 0;
+		this.credit = credit;
 	}
 
 
+	@Key
 	@Override
 	public String getId() {
 		return id;
@@ -36,6 +47,7 @@ public class UserImpl implements User {
 	}
 	
 	public String toString() {
-		return "{ id: " + id + ", credit: " + credit + " }";
+		return "User: " + this.getId();
 	}
+
 }

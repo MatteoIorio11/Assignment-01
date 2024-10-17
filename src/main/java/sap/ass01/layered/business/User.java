@@ -1,6 +1,8 @@
 package sap.ass01.layered.business;
 
-public interface User extends java.io.Serializable {
+
+public interface User {
+
     String getId();
 
     int getCredit();

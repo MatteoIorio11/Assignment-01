@@ -7,7 +7,6 @@ import java.util.Optional;
 
 public interface Ride {
     String getId();
-
     void start(EBikeApp app);
 
     void end();
