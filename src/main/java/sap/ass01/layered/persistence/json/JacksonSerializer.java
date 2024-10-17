@@ -19,9 +19,10 @@ public class JacksonSerializer<T, K> implements Serializer<T, K>{
     private final File file;
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final Class<T> typeClass;
+    private static final String RESOURCE_PATH = "src/main/resources/";
 
     public JacksonSerializer(final Class<T> clazz) {
-        this.file = new File(Serializer.path() + clazz.getSimpleName().toLowerCase() + ".json");
+        this.file = new File( RESOURCE_PATH + clazz.getSimpleName().toLowerCase() + ".json");
         this.typeClass = clazz;
         this.checkFile();
     }
@@ -71,7 +72,7 @@ public class JacksonSerializer<T, K> implements Serializer<T, K>{
                     }
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                System.err.println(e.getMessage());
             }
         }
         return Optional.empty();
