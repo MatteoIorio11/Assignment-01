@@ -1,5 +1,7 @@
 package sap.ass01.layered.business;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 public interface EBike {
     String getId();
 
@@ -27,5 +29,20 @@ public interface EBike {
 
     P2d getLocation();
 
-    public enum EBikeState {AVAILABLE, IN_USE, MAINTENANCE}
+    public enum EBikeState {
+        AVAILABLE,
+        IN_USE,
+        MAINTENANCE;
+
+        @JsonCreator
+        public static EBikeState fromValue(String value) {
+            // Normalize the string (e.g., lowercase) and map it to the enum
+            return switch (value.toUpperCase()) {
+                case "AVAILABLE" -> AVAILABLE;
+                case "IN_USE" -> IN_USE;
+                case "MAINTENANCE" -> MAINTENANCE;
+                default -> throw new IllegalArgumentException("Unknown value: " + value);
+            };
+        }
+    }
 }

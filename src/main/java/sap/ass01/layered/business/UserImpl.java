@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeId;
 import sap.ass01.layered.persistence.Key;
 
+import java.util.Objects;
+
 public class UserImpl implements User {
 	@JsonProperty("id")  // Ensure the 'id' field is serialized
 	private final String id;
@@ -45,7 +47,20 @@ public class UserImpl implements User {
 		// TODO: attach at runtime a new persistence logic
 		// NOTE: Call persistence layer about saving the new value
 	}
-	
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		UserImpl user = (UserImpl) o;
+		return Objects.equals(id, user.id);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, credit);
+	}
+
 	public String toString() {
 		return "User: " + this.getId();
 	}

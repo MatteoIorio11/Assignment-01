@@ -9,6 +9,9 @@
  */
 package sap.ass01.layered.business;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  *
  * 2-dimensional vector
@@ -17,9 +20,12 @@ package sap.ass01.layered.business;
  */
 public class V2d implements java.io.Serializable {
 
-    private double x,y;
-
-    public V2d(double x,double y){
+    @JsonProperty("x")
+    private double x;
+    @JsonProperty("y")
+    private double y;
+    @JsonCreator()
+    public V2d(double x, double y){
         this.x = x;
         this.y = y;
     }

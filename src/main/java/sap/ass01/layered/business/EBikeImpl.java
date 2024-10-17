@@ -1,21 +1,45 @@
 package sap.ass01.layered.business;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import sap.ass01.layered.persistence.Key;
+
+@JsonIgnoreProperties(ignoreUnknown = true)  // Ignore unknown properties like "available"
 public class EBikeImpl implements EBike {
+	@JsonProperty("id")
 	private final String id;
+	@JsonProperty("state")
 	private EBikeState state;
+	@JsonProperty("location")
 	private P2d loc;
+	@JsonIgnore()
 	private V2d direction;
+	@JsonProperty("speed")
 	private double speed;
+	@JsonProperty("battery")
 	private int batteryLevel;  /* 0..100 */
-	
+
 	public EBikeImpl(String id) {
-		this.id = id;
-		this.state = EBikeState.AVAILABLE;
-		this.loc = new P2d(0,0);
-		direction = new V2d(1,0);
-		speed = 0;
+		this(id, EBikeState.AVAILABLE, new P2d(0, 0), 0, 100);
 	}
-	
+
+	@JsonCreator()
+	public EBikeImpl(@JsonProperty("id") String id,
+					 @JsonProperty("state") EBikeState state,
+					 @JsonProperty("location") P2d loc,
+					 @JsonProperty("speed") double speed,
+					 @JsonProperty("battery") int batteryLevel) {
+		this.id = id;
+		this.state = state;
+		this.loc = loc;
+		this.direction = new V2d(1,0);;
+		this.speed = speed;
+		this.batteryLevel = batteryLevel;
+	}
+
+	@Key
 	@Override
 	public String getId() {
 		return id;

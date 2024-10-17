@@ -1,5 +1,8 @@
 package sap.ass01.layered.business;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  *
  * 2-dimensional point
@@ -8,9 +11,13 @@ package sap.ass01.layered.business;
  */
 public class P2d implements java.io.Serializable {
 
-    private double x,y;
+    @JsonProperty("x")
+    private double x;
+    @JsonProperty("y")
+    private double y;
 
-    public P2d(double x,double y){
+    @JsonCreator()
+    public P2d(@JsonProperty("x") double x, @JsonProperty("y") double y){
         this.x=x;
         this.y=y;
     }
