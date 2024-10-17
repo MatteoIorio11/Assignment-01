@@ -1,70 +1,24 @@
 package sap.ass01.layered.business;
 
-import sap.ass01.layered.presentation.RideSimulationControlPanel;
 import sap.ass01.layered.presentation.EBikeApp;
 
 import java.util.Date;
 import java.util.Optional;
 
-public class Ride {
+public interface Ride {
+    String getId();
 
-	private Date startedDate;
-	private Optional<Date> endDate;
-	private User user;
-	private EBike ebike;
-	private boolean ongoing;
-	private String id;
-	private RideSimulation rideSimulation;
-	
-	public Ride(String id, User user, EBike ebike) {
-		this.id = id;
-		this.startedDate = new Date();
-		this.endDate = Optional.empty();
-		this.user = user;
-		this.ebike = ebike;
-	}
-	
-	public String getId() {
-		return id;
-	}
+    void start(EBikeApp app);
 
-	public void start(EBikeApp app) {
-		ongoing = true;
-        rideSimulation = new RideSimulation(this, user, app);
-        RideSimulationControlPanel ridingWindow = new RideSimulationControlPanel(this, app);
-        ridingWindow.display();
-        rideSimulation.start();
-        
-        
-	}
-	
-	public void end() {
-		endDate = Optional.of(new Date());
-		ongoing = false;
-		rideSimulation.stopSimulation();
-	}
+    void end();
 
-	public Date getStartedDate() {
-		return startedDate;
-	}
+    Date getStartedDate();
 
-	public boolean isOngoing() {
-		return this.ongoing;
-	}
-	
-	public Optional<Date> getEndDate() {
-		return endDate;
-	}
+    boolean isOngoing();
 
-	public User getUser() {
-		return user;
-	}
+    Optional<Date> getEndDate();
 
-	public EBike getEBike() {
-		return ebike;
-	}
-	
-	public String toString() {
-		return "{ id: " + this.id + ", user: " + user.getId() + ", bike: " + ebike.getId() + " }";
-	}
+    User getUser();
+
+    EBike getEBike();
 }
