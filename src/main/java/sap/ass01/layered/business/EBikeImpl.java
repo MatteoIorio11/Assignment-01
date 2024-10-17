@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import sap.ass01.layered.persistence.Key;
 
+import java.util.Objects;
+
 @JsonIgnoreProperties(ignoreUnknown = true)  // Ignore unknown properties like "available"
 public class EBikeImpl implements EBike {
 	@JsonProperty("id")
@@ -115,5 +117,17 @@ public class EBikeImpl implements EBike {
 	public String toString() {
 		return "{ id: " + id + ", loc: " + loc + ", batteryLevel: " + batteryLevel + ", state: " + state + " }";
 	}
-	
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		EBikeImpl eBike = (EBikeImpl) o;
+		return Objects.equals(id, eBike.id);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
 }
