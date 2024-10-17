@@ -11,10 +11,6 @@ public interface Serializer<T, K> {
     Iterable<T> readAll();
     Optional<T> readByID(K key);
 
-    static String path() {
-        return "src/main/resources/";
-    }
-
     static <T> List<T> iterableToList(Iterable<T> iterable) {
         final List<T> list = new LinkedList<>();
         for (final T item : iterable) {
