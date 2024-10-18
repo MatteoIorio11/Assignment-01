@@ -9,4 +9,9 @@ public class UserRepository extends AbstractRepository<User, String> {
     public UserRepository(Serializer<User, String> serializer) {
         super(serializer);
     }
+
+    @Override
+    public String generateNewId() {
+        return null;
+    }
 }

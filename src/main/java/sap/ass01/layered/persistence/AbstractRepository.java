@@ -23,9 +23,10 @@ public abstract class AbstractRepository<T, K> implements Repository<T, K> {
     public Iterable<T> getAll() {
         return this.serializer.readAll();
     }
-
     @Override
     public Optional<T> getObjectByID(K objectKey) {
         return this.serializer.readByID(objectKey);
     }
+
+    public abstract K generateNewId();
 }

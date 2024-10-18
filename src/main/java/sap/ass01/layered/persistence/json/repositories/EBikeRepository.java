@@ -9,4 +9,8 @@ public class EBikeRepository extends AbstractRepository<EBike, String> {
         super(serializer);
     }
 
+    @Override
+    public String generateNewId() {
+        throw new UnsupportedOperationException("generateNewID not implemented");
+    }
 }
