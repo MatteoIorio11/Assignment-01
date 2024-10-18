@@ -4,10 +4,12 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import sap.ass01.layered.persistence.Key;
 import sap.ass01.layered.presentation.RideSimulationControlPanel;
 import sap.ass01.layered.presentation.EBikeApp;
 
 import java.util.Date;
+import java.util.Objects;
 import java.util.Optional;
 
 @JsonIgnoreProperties(ignoreUnknown = true)  // Ignore unknown properties like "available"
@@ -99,8 +101,22 @@ public class RideImpl implements Ride {
 		return "{ id: " + this.id + ", user: " + user.getId() + ", bike: " + ebike.getId() + " }";
 	}
 
+	@Key
 	@Override
 	public String getId() {
 		return this.id;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		RideImpl ride = (RideImpl) o;
+		return Objects.equals(id, ride.id);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
 	}
 }
