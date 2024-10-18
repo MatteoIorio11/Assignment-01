@@ -30,9 +30,7 @@ public class JacksonSerializer<T, K> implements Serializer<T, K>{
     @Override
     public void serialize(T object) {
         final List<T> myObjects = Serializer.iterableToList(this.readAll());
-        System.out.println(myObjects);
         myObjects.add(object);
-        System.out.println(myObjects);
         this.serializeAll(myObjects);
     }
 
@@ -61,7 +59,6 @@ public class JacksonSerializer<T, K> implements Serializer<T, K>{
         final Iterable<T> output = this.readAll();
         for (final T obj : output) {
             try {
-                System.out.println(obj.getClass());
                 final Method[] methods = obj.getClass().getDeclaredMethods();
                 for (final Method method : methods) {
                     if (method.isAnnotationPresent(Key.class)) {
