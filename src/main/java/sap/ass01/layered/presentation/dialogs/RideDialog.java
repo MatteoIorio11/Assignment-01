@@ -6,10 +6,6 @@ import sap.ass01.layered.services.dto.RideDTO;
 import javax.swing.*;
 import java.awt.*;
 
-/**
- * Adapted from AddEBikeDialog
- * 
- */
 public class RideDialog extends AbstractDialog<RideDTO> {
 
     private JTextField idEBikeField;

@@ -7,11 +7,6 @@ import sap.ass01.layered.services.dto.UserDTO;
 import javax.swing.*;
 import java.awt.*;
 
-/**
- * 
- * Adapted from AddEBikeDialog
- * 
- */
 public class AddUserDialog extends AbstractDialog<UserDTO> {
 
     private JTextField idField, errorField;
