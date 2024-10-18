@@ -21,11 +21,19 @@ public interface Serializer<T, K> {
     Optional<T> readByID(K key);
 
     static Serializer<User, String> userJSONSerializer() {
-        SimpleModule module = new SimpleModule("UserModule", Version.unknownVersion());
-        SimpleAbstractTypeResolver resolver = new SimpleAbstractTypeResolver();
+        final SimpleModule module = new SimpleModule("UserModule", Version.unknownVersion());
+        final SimpleAbstractTypeResolver resolver = new SimpleAbstractTypeResolver();
         resolver.addMapping(User.class, UserImpl.class);
         module.setAbstractTypes(resolver);
         return new JacksonSerializer<>(User.class, module);
+    }
+
+    static Serializer<EBike, String> ebikeJSONSerializer() {
+        final SimpleModule module = new SimpleModule("EBikeModule", Version.unknownVersion());
+        final SimpleAbstractTypeResolver resolver = new SimpleAbstractTypeResolver();
+        resolver.addMapping(EBike.class, EBikeImpl.class);
+        module.setAbstractTypes(resolver);
+        return new JacksonSerializer<>(EBike.class, module);
     }
 
     static <T> List<T> iterableToList(Iterable<T> iterable) {
