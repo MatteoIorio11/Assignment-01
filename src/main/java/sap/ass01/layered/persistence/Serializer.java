@@ -3,10 +3,7 @@ package sap.ass01.layered.persistence;
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.module.SimpleAbstractTypeResolver;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import sap.ass01.layered.business.EBike;
-import sap.ass01.layered.business.EBikeImpl;
-import sap.ass01.layered.business.User;
-import sap.ass01.layered.business.UserImpl;
+import sap.ass01.layered.business.*;
 import sap.ass01.layered.persistence.json.JacksonSerializer;
 
 import java.util.LinkedList;
@@ -34,6 +31,16 @@ public interface Serializer<T, K> {
         resolver.addMapping(EBike.class, EBikeImpl.class);
         module.setAbstractTypes(resolver);
         return new JacksonSerializer<>(EBike.class, module);
+    }
+
+    static Serializer<Ride, String> rideJSONSerializer() {
+        final SimpleModule module = new SimpleModule("RideModule", Version.unknownVersion());
+        final SimpleAbstractTypeResolver resolver = new SimpleAbstractTypeResolver();
+        resolver.addMapping(User.class, UserImpl.class);
+        resolver.addMapping(EBike.class, EBikeImpl.class);
+        resolver.addMapping(Ride.class, RideImpl.class);
+        module.setAbstractTypes(resolver);
+        return new JacksonSerializer<>(Ride.class, module);
     }
 
     static <T> List<T> iterableToList(Iterable<T> iterable) {
