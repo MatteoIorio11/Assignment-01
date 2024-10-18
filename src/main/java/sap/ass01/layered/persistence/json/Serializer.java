@@ -1,15 +1,13 @@
-package sap.ass01.layered.persistence;
+package sap.ass01.layered.persistence.json;
 
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.module.SimpleAbstractTypeResolver;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import sap.ass01.layered.business.*;
-import sap.ass01.layered.persistence.json.JacksonSerializer;
+import sap.ass01.layered.persistence.EntityStore;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
-import java.util.function.Predicate;
 
 public interface Serializer<T, K> extends EntityStore<T, K> {
 
