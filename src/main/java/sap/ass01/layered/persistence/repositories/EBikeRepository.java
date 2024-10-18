@@ -10,8 +10,8 @@ import sap.ass01.layered.business.UserImpl;
 import sap.ass01.layered.persistence.AbstractRepository;
 import sap.ass01.layered.persistence.Serializer;
 
-public class EBikeRepository extends AbstractRepository<EBikeImpl, String> {
-    public EBikeRepository(final Serializer<EBikeImpl, String> serializer) {
+public class EBikeRepository extends AbstractRepository<EBike, String> {
+    public EBikeRepository(final Serializer<EBike, String> serializer) {
         super(serializer);
     }
 
