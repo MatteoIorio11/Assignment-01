@@ -1,6 +1,7 @@
 package sap.ass01.layered.services;
 
 import sap.ass01.layered.business.User;
+import sap.ass01.layered.business.UserImpl;
 import sap.ass01.layered.persistence.Repository;
 import sap.ass01.layered.presentation.observers.InputObserver;
 import sap.ass01.layered.services.dto.UserDTO;
@@ -18,7 +19,11 @@ public class UserService implements Service<User>, InputObserver<UserDTO> {
 
     @Override
     public void notifyUpdateRequested(final UserDTO newValue) {
-        // Some logic for retrieving user given the dto
+        this.add(this.fromDTO(newValue));
+    }
+
+    private User fromDTO(final UserDTO dto) {
+        return new UserImpl(dto.id());
     }
 
     @Override
