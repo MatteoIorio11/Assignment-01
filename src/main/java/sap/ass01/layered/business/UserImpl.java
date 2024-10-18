@@ -63,5 +63,4 @@ public class UserImpl implements User {
 	public String toString() {
 		return "User: " + this.getId();
 	}
-
 }
