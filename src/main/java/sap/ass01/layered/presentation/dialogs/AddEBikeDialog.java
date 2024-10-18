@@ -30,15 +30,12 @@ public class AddEBikeDialog extends AbstractDialog<EBikeDTO> {
 
     @Override
     protected void setUpLayout() {
-        JPanel inputPanel = new JPanel(new GridLayout(3, 2, 10, 10));
-        inputPanel.add(new JLabel("E-Bike ID:"));
-        inputPanel.add(idField);
-        inputPanel.add(new JLabel("E-Bike location - X coord:"));
-        inputPanel.add(xCoordField);
-        inputPanel.add(new JLabel("E-Bike location - Y coord:"));
-        inputPanel.add(yCoordField);
+        final JPanel inputPanel = new JPanel(new GridLayout(3, 2, 10, 10));
+        this.addLabelToPanel(inputPanel, this.idField, "E-Bike ID:");
+        this.addLabelToPanel(inputPanel, this.xCoordField, "E-Bike location - X coord:");
+        this.addLabelToPanel(inputPanel, this.yCoordField, "E-Bike location - Y coord:");
 
-        JPanel buttonPanel = new JPanel();
+        final JPanel buttonPanel = new JPanel();
         buttonPanel.add(okButton);
         buttonPanel.add(cancelButton);
 
@@ -46,7 +43,6 @@ public class AddEBikeDialog extends AbstractDialog<EBikeDTO> {
         add(inputPanel, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
     }
-
 
     @Override
     protected void addEventHandlers() {

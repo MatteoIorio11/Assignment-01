@@ -32,11 +32,10 @@ public class AddUserDialog extends AbstractDialog<UserDTO> {
 
     @Override
     protected void setUpLayout() {
-        JPanel inputPanel = new JPanel(new GridLayout(3, 2, 10, 10));
-        inputPanel.add(new JLabel("User ID:"));
-        inputPanel.add(idField);
+        final JPanel inputPanel = new JPanel(new GridLayout(3, 2, 10, 10));
+        this.addLabelToPanel(inputPanel, this.idField, "User ID:");
 
-        JPanel buttonPanel = new JPanel();
+        final JPanel buttonPanel = new JPanel();
         buttonPanel.add(okButton);
         buttonPanel.add(cancelButton);
 
@@ -52,9 +51,7 @@ public class AddUserDialog extends AbstractDialog<UserDTO> {
     @Override
     protected void addEventHandlers() {
         okButton.addActionListener((e) -> {
-            // Implement OK button behavior here
-            String id = idField.getText();
-            controller.notifyUpdateRequested(new UserDTO(id));
+            controller.notifyUpdateRequested(new UserDTO(this.idField.getText()));
             dispose();
         });
 

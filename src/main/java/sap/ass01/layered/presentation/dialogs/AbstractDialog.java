@@ -24,4 +24,10 @@ public abstract class AbstractDialog<D extends DTO> extends JDialog {
     protected abstract void setUpLayout();
 
     protected abstract void addEventHandlers();
+
+    protected void addLabelToPanel(final JPanel inputPanel, final JTextField textField, final String label) {
+        inputPanel.add(new JLabel(label));
+        inputPanel.add(textField);
+    }
+
 }

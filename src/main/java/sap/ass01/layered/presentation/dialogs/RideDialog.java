@@ -33,13 +33,11 @@ public class RideDialog extends AbstractDialog<RideDTO> {
 
     @Override
     protected void setUpLayout() {
-        JPanel inputPanel = new JPanel(new GridLayout(3, 2, 10, 10));
-        inputPanel.add(new JLabel("User name:"));
-        inputPanel.add(userName);
-        inputPanel.add(new JLabel("E-Bike to ride:"));
-        inputPanel.add(idEBikeField);
+        final JPanel inputPanel = new JPanel(new GridLayout(3, 2, 10, 10));
+        this.addLabelToPanel(inputPanel, this.userName, "User name:");
+        this.addLabelToPanel(inputPanel, this.idEBikeField, "E-Bike to ride:");
 
-        JPanel buttonPanel = new JPanel();
+        final JPanel buttonPanel = new JPanel();
         buttonPanel.add(startButton);
         buttonPanel.add(cancelButton);
 
