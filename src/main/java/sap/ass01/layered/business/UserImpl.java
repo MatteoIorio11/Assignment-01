@@ -21,7 +21,6 @@ public class UserImpl implements User {
 		this.credit = credit;
 	}
 
-
 	@Key
 	@Override
 	public String getId() {
@@ -64,5 +63,4 @@ public class UserImpl implements User {
 	public String toString() {
 		return "User: " + this.getId();
 	}
-
 }

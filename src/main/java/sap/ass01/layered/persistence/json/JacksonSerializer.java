@@ -1,10 +1,8 @@
 package sap.ass01.layered.persistence.json;
 
-import com.fasterxml.jackson.annotation.JsonTypeId;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import sap.ass01.layered.business.User;
-import sap.ass01.layered.business.UserImpl;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import sap.ass01.layered.persistence.*;
 
 import java.io.File;
@@ -13,7 +11,6 @@ import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.function.Predicate;
 
 public class JacksonSerializer<T, K> implements Serializer<T, K>{
     private final File file;
@@ -22,15 +19,26 @@ public class JacksonSerializer<T, K> implements Serializer<T, K>{
     private static final String RESOURCE_PATH = "src/main/resources/json/";
 
     public JacksonSerializer(final Class<T> clazz) {
+        this.objectMapper.registerModule(new Jdk8Module());
         this.file = new File( RESOURCE_PATH + clazz.getSimpleName().toLowerCase() + ".json");
         this.typeClass = clazz;
         this.checkFile();
+    }
+    public JacksonSerializer(final Class<T> clazz, final SimpleModule module) {
+        this(clazz);
+        this.objectMapper.registerModule(module);
     }
 
     @Override
     public void serialize(T object) {
         final List<T> myObjects = Serializer.iterableToList(this.readAll());
-        myObjects.add(object);
+        final int index = myObjects.indexOf(object);
+        // Replace the object if exists
+        if (index >= 0){
+           myObjects.set(index, object);
+        }else {
+            myObjects.add(object);
+        }
         this.serializeAll(myObjects);
     }
 
@@ -59,7 +67,7 @@ public class JacksonSerializer<T, K> implements Serializer<T, K>{
         final Iterable<T> output = this.readAll();
         for (final T obj : output) {
             try {
-                final Method[] methods = obj.getClass().getDeclaredMethods();
+                final Method[] methods = obj.getClass().getMethods();
                 for (final Method method : methods) {
                     if (method.isAnnotationPresent(Key.class)) {
                         final Object objectKey = method.invoke(obj);

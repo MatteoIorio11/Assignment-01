@@ -1,13 +1,12 @@
 package sap.ass01.layered.persistence;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.Objects;
+import sap.ass01.layered.persistence.json.Serializer;
+
 import java.util.Optional;
 
 public abstract class AbstractRepository<T, K> implements Repository<T, K> {
-    private final Serializer<T, K> serializer;
-    public AbstractRepository(final Serializer<T, K> serializer){
+    private final EntityStore<T, K> serializer;
+    public AbstractRepository(final EntityStore<T, K> serializer){
         this.serializer = serializer;
     }
     @Override
