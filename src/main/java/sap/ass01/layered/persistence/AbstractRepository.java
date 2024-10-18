@@ -28,5 +28,8 @@ public abstract class AbstractRepository<T, K> implements Repository<T, K> {
         return this.serializer.readByID(objectKey);
     }
 
-    public abstract K generateNewId();
+    @Override
+    public K generateNewId() {
+        throw new UnsupportedOperationException("generateNewID not implemented");
+    }
 }

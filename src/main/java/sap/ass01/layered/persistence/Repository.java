@@ -8,4 +8,5 @@ public interface Repository<T, K>{
     void save(T object);
     Iterable<T> getAll();
     Optional<T> getObjectByID(K objectKey);
+    K generateNewId();
 }

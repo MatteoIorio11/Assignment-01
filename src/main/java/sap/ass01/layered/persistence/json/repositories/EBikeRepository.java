@@ -8,9 +8,4 @@ public class EBikeRepository extends AbstractRepository<EBike, String> {
     public EBikeRepository(final Serializer<EBike, String> serializer) {
         super(serializer);
     }
-
-    @Override
-    public String generateNewId() {
-        throw new UnsupportedOperationException("generateNewID not implemented");
-    }
 }
