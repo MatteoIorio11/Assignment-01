@@ -1,5 +1,14 @@
 package sap.ass01.layered.persistence;
 
+import com.fasterxml.jackson.core.Version;
+import com.fasterxml.jackson.databind.module.SimpleAbstractTypeResolver;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import sap.ass01.layered.business.EBike;
+import sap.ass01.layered.business.EBikeImpl;
+import sap.ass01.layered.business.User;
+import sap.ass01.layered.business.UserImpl;
+import sap.ass01.layered.persistence.json.JacksonSerializer;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -10,6 +19,14 @@ public interface Serializer<T, K> {
     void serializeAll(Iterable<T> objects);
     Iterable<T> readAll();
     Optional<T> readByID(K key);
+
+    static Serializer<User, String> userJSONSerializer() {
+        SimpleModule module = new SimpleModule("UserModule", Version.unknownVersion());
+        SimpleAbstractTypeResolver resolver = new SimpleAbstractTypeResolver();
+        resolver.addMapping(User.class, UserImpl.class);
+        module.setAbstractTypes(resolver);
+        return new JacksonSerializer<>(User.class, module);
+    }
 
     static <T> List<T> iterableToList(Iterable<T> iterable) {
         final List<T> list = new LinkedList<>();
