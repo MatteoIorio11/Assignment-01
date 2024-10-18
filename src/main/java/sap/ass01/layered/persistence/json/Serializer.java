@@ -11,11 +11,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-public interface Serializer<T, K> {
-    void serialize(T object);
-    void serializeAll(Iterable<T> objects);
-    Iterable<T> readAll();
-    Optional<T> readByID(K key);
+public interface Serializer<T, K> extends EntityStore<T, K> {
 
     static Serializer<User, String> userJSONSerializer() {
         final SimpleModule module = new SimpleModule("UserModule", Version.unknownVersion());
