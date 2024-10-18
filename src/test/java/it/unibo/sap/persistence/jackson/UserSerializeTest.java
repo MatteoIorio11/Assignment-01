@@ -4,16 +4,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import sap.ass01.layered.business.User;
 import sap.ass01.layered.business.UserImpl;
-import sap.ass01.layered.persistence.Serializer;
-import sap.ass01.layered.persistence.json.JacksonSerializer;
-import sap.ass01.layered.persistence.repositories.UserRepository;
+import sap.ass01.layered.persistence.json.Serializer;
+import sap.ass01.layered.persistence.json.repositories.UserRepository;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

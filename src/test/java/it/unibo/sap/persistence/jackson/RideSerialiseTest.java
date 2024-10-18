@@ -5,8 +5,8 @@ import sap.ass01.layered.business.EBikeImpl;
 import sap.ass01.layered.business.Ride;
 import sap.ass01.layered.business.RideImpl;
 import sap.ass01.layered.business.UserImpl;
-import sap.ass01.layered.persistence.Serializer;
-import sap.ass01.layered.persistence.repositories.RideRepository;
+import sap.ass01.layered.persistence.json.Serializer;
+import sap.ass01.layered.persistence.json.repositories.RideRepository;
 
 import java.util.Optional;
 
