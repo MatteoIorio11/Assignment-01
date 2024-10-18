@@ -21,7 +21,6 @@ public class UserImpl implements User {
 		this.credit = credit;
 	}
 
-
 	@Key
 	@Override
 	public String getId() {
