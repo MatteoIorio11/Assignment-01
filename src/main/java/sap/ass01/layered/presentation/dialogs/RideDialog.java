@@ -1,42 +1,38 @@
-package sap.ass01.layered.presentation;
+package sap.ass01.layered.presentation.dialogs;
+
+import sap.ass01.layered.presentation.observers.InputObserver;
+import sap.ass01.layered.services.dto.RideDTO;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * Adapted from AddEBikeDialog
  * 
  */
-public class RideDialog extends JDialog {
+public class RideDialog extends AbstractDialog<RideDTO> {
 
     private JTextField idEBikeField;
     private JTextField userName;
     private JButton startButton;
     private JButton cancelButton;
-    private EBikeApp app;
     private String userRiding;
     private String bikeId;
 
-    public RideDialog(EBikeApp owner) {
-        super(owner, "Start Riding an EBike", true);
-        initializeComponents();
-        setupLayout();
-        addEventHandlers();
-        pack();
-        setLocationRelativeTo(owner);
-        app = owner;
+    public RideDialog(final JFrame parentFrame, final InputObserver<RideDTO> controller) {
+        super(parentFrame, controller, "Start Riding an EBike");
     }
 
-    private void initializeComponents() {
+    @Override
+    protected void initializeComponents() {
         idEBikeField = new JTextField(15);
         userName = new JTextField(15);
         startButton = new JButton("Start Riding");
         cancelButton = new JButton("Cancel");
     }
 
-    private void setupLayout() {
+    @Override
+    protected void setUpLayout() {
         JPanel inputPanel = new JPanel(new GridLayout(3, 2, 10, 10));
         inputPanel.add(new JLabel("User name:"));
         inputPanel.add(userName);
@@ -52,31 +48,16 @@ public class RideDialog extends JDialog {
         add(buttonPanel, BorderLayout.SOUTH);
     }
 
-    private void addEventHandlers() {
-        startButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+    @Override
+    protected void addEventHandlers() {
+        startButton.addActionListener((e) -> {
                 bikeId = idEBikeField.getText();
 	            userRiding = userName.getText();
 	            cancelButton.setEnabled(false);
-	            app.startNewRide(userRiding, bikeId);
+                this.controller.notifyUpdateRequested(new RideDTO(bikeId, userRiding));
 	            dispose();
-            }
         });
         
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-            }
-        });
+        cancelButton.addActionListener((e) -> dispose());
     }
-    
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-        	RideDialog dialog = new RideDialog(null);
-            dialog.setVisible(true);
-        });
-    }
-    
 }

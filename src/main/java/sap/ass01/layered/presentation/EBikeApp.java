@@ -1,6 +1,12 @@
 package sap.ass01.layered.presentation;
 
 import sap.ass01.layered.business.*;
+import sap.ass01.layered.presentation.dialogs.AddEBikeDialog;
+import sap.ass01.layered.presentation.dialogs.AddUserDialog;
+import sap.ass01.layered.presentation.dialogs.RideDialog;
+import sap.ass01.layered.services.EBikeService;
+import sap.ass01.layered.services.RideService;
+import sap.ass01.layered.services.UserService;
 
 import java.awt.BorderLayout;
 import java.awt.Graphics;
@@ -34,9 +40,9 @@ public class EBikeApp extends JFrame implements ActionListener {
 
     
     protected void setupModel() {
-        bikes = new ConcurrentHashMap<String, EBikeImpl>();
-        users = new HashMap<String, UserImpl>();
-        rides = new HashMap<String, RideImpl>();
+        bikes = new ConcurrentHashMap<>();
+        users = new HashMap<>();
+        rides = new HashMap<>();
         
         rideId = 0;
         this.addUser("u1");
@@ -133,18 +139,17 @@ public class EBikeApp extends JFrame implements ActionListener {
     public void refreshView() {
     	centralPanel.refresh();
     }
-        
 
     @Override
 	public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.addEBikeButton) {
-	        JDialog d = new AddEBikeDialog(this);
+	        JDialog d = new AddEBikeDialog(this, new EBikeService());
 	        d.setVisible(true);
         } else if (e.getSource() == this.addUserButton) {
-		    JDialog d = new AddUserDialog(this);
+		    JDialog d = new AddUserDialog(this, new UserService());
 		    d.setVisible(true);
         } else if (e.getSource() == this.startRideButton) {
-	        JDialog d = new RideDialog(this);
+	        JDialog d = new RideDialog(this, new RideService());
 	        d.setVisible(true);
         }
 	}

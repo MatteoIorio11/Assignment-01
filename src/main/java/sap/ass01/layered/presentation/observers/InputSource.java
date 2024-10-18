@@ -1,5 +1,7 @@
 package sap.ass01.layered.presentation.observers;
 
-public interface InputSource<T> {
-    void addObserver(InputObserver<T> obs);
+import sap.ass01.layered.services.dto.DTO;
+
+public interface InputSource<D extends DTO> {
+    void addObserver(InputObserver<D> obs);
 }
