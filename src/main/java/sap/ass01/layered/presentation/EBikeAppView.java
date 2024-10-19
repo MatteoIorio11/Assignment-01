@@ -69,4 +69,8 @@ public class EBikeAppView extends JFrame implements ActionListener {
             new RideDialog(this, this.serviceProvider.getRideService()).setVisible(true);
         }
     }
+
+    public static void main(String[] args) {
+        new EBikeAppView(new ServiceProvider()).display();
+    }
 }

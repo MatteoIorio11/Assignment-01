@@ -56,35 +56,21 @@ public class EBikeApp {
     	log("added new User " + user);
 		this.view.refreshView();
     }
+//
+//    public void startNewRide(String userId, String bikeId) {
+//    	rideId++;
+//    	String idRide = "ride-" + rideId;
+//
+//    	var b = bikes.get(bikeId);
+//    	var u = users.get(userId);
+//    	var ride = new RideImpl(idRide, u, b);
+//    	b.updateState(EBikeImpl.EBikeState.IN_USE);
+//    	rides.put(idRide, ride);
+//    	ride.start(this);
+//
+//        log("started new Ride " + ride);
+//    }
 
-    public void startNewRide(String userId, String bikeId) {
-    	rideId++;    	 
-    	String idRide = "ride-" + rideId;
-    	
-    	var b = bikes.get(bikeId);
-    	var u = users.get(userId);
-    	var ride = new RideImpl(idRide, u, b);
-    	b.updateState(EBikeImpl.EBikeState.IN_USE);
-    	rides.put(idRide, ride);
-    	ride.start(this);
-        
-        log("started new Ride " + ride);        
-    }
-
-    public void endRide(String rideId) {
-    	var r = rides.get(rideId);
-    	r.end();
-    	rides.remove(rideId);
-    }
-    
-    public Enumeration<EBike> getEBikes(){
-    	return bikes.elements();
-    }
-        
-    public Collection<User> getUsers(){
-    	return users.values();
-    }
-    
 	private void log(String msg) {
 		System.out.println("[EBikeApp] " + msg);
 	}

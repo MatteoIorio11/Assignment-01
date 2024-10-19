@@ -2,6 +2,10 @@ package sap.ass01.layered.business;
 
 import sap.ass01.layered.business.observers.ModelObserver;
 import sap.ass01.layered.business.observers.ModelObserverSource;
+import sap.ass01.layered.services.EBikeService;
+import sap.ass01.layered.services.RideService;
+import sap.ass01.layered.services.Service;
+import sap.ass01.layered.services.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,14 +14,20 @@ public class RideSimulation extends Thread implements ModelObserverSource {
 	
 	private final Ride ride;
 	private final User user;
+	private final List<Service<?, String>> services;
 
 	private final List<ModelObserver> observers;
 
 	private volatile boolean stopped;
 
-	public RideSimulation(Ride ride, User user) {
+	public RideSimulation(
+			final Ride ride,
+			final User user,
+			final List<Service<?, String>> services
+			) {
 		this.ride = ride;
 		this.user = user;
+		this.services = services;
 		this.observers = new ArrayList<>();
 		this.stopped = false;
 	}
@@ -32,9 +42,7 @@ public class RideSimulation extends Thread implements ModelObserverSource {
 		var lastTimeChangedDir = System.currentTimeMillis();
 		
 		while (!stopped) {
-			
-			/* update pos */
-			
+
 			var l = b.getLocation();
 			var d = b.getDirection();
 			var s = b.getSpeed();
@@ -47,7 +55,7 @@ public class RideSimulation extends Thread implements ModelObserverSource {
 				} else {
 					b.updateLocation(new P2d(-200, l.y()));
 				}
-			};
+			}
 			if (l.y() > 200 || l.y() < -200) {
 				b.updateDirection(new V2d(d.x(), -d.y()));
 				if (l.y() > 200) {
@@ -55,7 +63,7 @@ public class RideSimulation extends Thread implements ModelObserverSource {
 				} else {
 					b.updateLocation(new P2d(l.x(), -200));
 				}
-			};
+			}
 			
 			/* change dir randomly */
 			
@@ -76,6 +84,7 @@ public class RideSimulation extends Thread implements ModelObserverSource {
 			}
 
 			// NOTE: Notify the EBikeApp about the new position
+			this.updateModel();
 			this.notifyObservers();
 
 			try {
@@ -85,8 +94,17 @@ public class RideSimulation extends Thread implements ModelObserverSource {
 		}
 	}
 
+	private void updateModel() {
+		Service.filterIsInstance(services, RideService.class).stream().findFirst().ifPresent(s -> s.update(this.ride));
+		Service.filterIsInstance(services, UserService.class).stream().findFirst().ifPresent(s -> s.update(this.user));
+		Service.filterIsInstance(services, EBikeService.class).stream().findFirst().ifPresent(s -> s.update(this.ride.getEBike()));
+	}
+
 	public void stopSimulation() {
 		stopped = true;
+		// missing in original implementation
+		this.ride.getEBike().updateState(EBike.EBikeState.AVAILABLE);
+		this.notifyObservers();
 		interrupt();
 	}
 

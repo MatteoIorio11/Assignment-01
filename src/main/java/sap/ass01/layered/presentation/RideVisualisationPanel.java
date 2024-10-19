@@ -23,6 +23,7 @@ public class RideVisualisationPanel extends JPanel implements ModelObserver {
 			this.userService = serviceProvider.getUserService();
         }
 
+		@Override
         public void paint(final Graphics g) {
 			final Graphics2D g2 = (Graphics2D) g;
 

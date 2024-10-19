@@ -1,31 +1,26 @@
 package sap.ass01.layered.presentation;
 
-import sap.ass01.layered.business.Ride;
-import sap.ass01.layered.presentation.EBikeApp;
+import sap.ass01.layered.services.dto.RideDTO;
+import sap.ass01.layered.services.observers.ActionObserver;
+import sap.ass01.layered.services.observers.ActionObserverSource;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
-public class RideSimulationControlPanel extends JFrame {
+public class RideSimulationControlPanel extends JFrame implements ActionObserverSource {
 
-    private JButton stopButton;
-    private EBikeApp app;
-    private Ride ride;
+    private final List<ActionObserver> observers = new ArrayList<>();
 
-    public RideSimulationControlPanel(Ride ride, EBikeApp app) {
-        super("Ongoing Ride: " + ride.getId());
+    public RideSimulationControlPanel(final RideDTO ride) {
     	setSize(400, 200);
-        
-        this.app = app;
-        this.ride = ride;
 
-        stopButton = new JButton("Stop Riding");
+        JButton stopButton = new JButton("Stop Riding");
     	
         JPanel inputPanel = new JPanel(new GridLayout(3, 2, 10, 10));
-        inputPanel.add(new JLabel("Rider name: " + ride.getUser().getId()));
-        inputPanel.add(new JLabel("Riding e-bike: " + ride.getEBike().getId()));
+        inputPanel.add(new JLabel("Rider name: " + ride.userId()));
+        inputPanel.add(new JLabel("Riding e-bike: " + ride.bikeId()));
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(stopButton);
@@ -35,7 +30,7 @@ public class RideSimulationControlPanel extends JFrame {
         add(buttonPanel, BorderLayout.SOUTH);
         
         stopButton.addActionListener((e) -> {
-            app.endRide(ride.getId());
+            this.observers.forEach(ActionObserver::notifyUpdateRequested);
             dispose();
         });
     }
@@ -46,4 +41,8 @@ public class RideSimulationControlPanel extends JFrame {
     	});
     }
 
+    @Override
+    public void addObserver(final ActionObserver observer) {
+        this.observers.add(observer);
+    }
 }

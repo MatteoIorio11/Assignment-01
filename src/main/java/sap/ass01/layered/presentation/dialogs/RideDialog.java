@@ -1,5 +1,6 @@
 package sap.ass01.layered.presentation.dialogs;
 
+import sap.ass01.layered.presentation.RideSimulationControlPanel;
 import sap.ass01.layered.services.observers.InputObserver;
 import sap.ass01.layered.services.dto.RideDTO;
 
@@ -12,8 +13,6 @@ public class RideDialog extends AbstractDialog<RideDTO> {
     private JTextField userName;
     private JButton startButton;
     private JButton cancelButton;
-    private String userRiding;
-    private String bikeId;
 
     public RideDialog(final JFrame parentFrame, final InputObserver<RideDTO> controller) {
         super(parentFrame, controller, "Start Riding an EBike");
@@ -45,11 +44,14 @@ public class RideDialog extends AbstractDialog<RideDTO> {
     @Override
     protected void addEventHandlers() {
         startButton.addActionListener((e) -> {
-                bikeId = idEBikeField.getText();
-	            userRiding = userName.getText();
-	            cancelButton.setEnabled(false);
-                this.controller.notifyUpdateRequested(new RideDTO(bikeId, userRiding));
-	            dispose();
+            this.cancelButton.setEnabled(false);
+            final var bikeId = idEBikeField.getText();
+            final var userRiding = userName.getText();
+            final var ride = new RideDTO(bikeId, userRiding);
+            this.controller.notifyUpdateRequested(ride);
+            dispose();
+            // Show the ride control panel
+            new RideSimulationControlPanel(ride);
         });
         
         cancelButton.addActionListener((e) -> dispose());

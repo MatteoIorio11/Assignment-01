@@ -5,9 +5,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import sap.ass01.layered.persistence.Key;
-import sap.ass01.layered.presentation.RideSimulationControlPanel;
-import sap.ass01.layered.presentation.EBikeApp;
+import sap.ass01.layered.services.Service;
 
+import java.util.List;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Optional;
@@ -55,12 +55,9 @@ public class RideImpl implements Ride {
 	
 
 	@Override
-	public void start(EBikeApp app) {
+	public void start(final List<Service<?, String>> services) {
 		ongoing = true;
-        rideSimulation = new RideSimulation(this, user);
-        RideSimulationControlPanel ridingWindow = new RideSimulationControlPanel(this, app);
-        ridingWindow.display();
-        rideSimulation.start();
+        rideSimulation = new RideSimulation(this, user, services);
 	}
 	
 	@Override
