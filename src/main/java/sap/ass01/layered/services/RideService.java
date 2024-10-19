@@ -15,6 +15,7 @@ import java.util.Optional;
 public class RideService implements Service<Ride, String>, InputObserver<RideDTO> {
 
     private final List<Repository<Ride, String>> repositories;
+    // TODO: meglio avere loro due oppure avere il servizio dello user della Ebike ???
     private final Repository<User, String> userRepository;
     private final Repository<EBike, String> eBikeRepository;
 
