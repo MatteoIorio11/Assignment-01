@@ -9,11 +9,11 @@ import sap.ass01.layered.services.dto.EBikeDTO;
 
 import java.util.List;
 import java.util.ArrayList;
-import java.util.stream.Stream;
+import java.util.Optional;
 
 public class EBikeService implements Service<EBike, String>, InputObserver<EBikeDTO> {
 
-    protected final List<Repository<EBike, String>> repositories;
+    private final List<Repository<EBike, String>> repositories;
 
     public EBikeService() {
         this.repositories = new ArrayList<>();
@@ -41,6 +41,11 @@ public class EBikeService implements Service<EBike, String>, InputObserver<EBike
         final List<EBike> ebikes = new ArrayList<>();
         this.repositories.stream().map(Repository::getAll).forEach(i -> i.forEach(ebikes::add));
         return ebikes.stream().distinct().toList();
+    }
+
+    @Override
+    public Optional<EBike> getById(final String objectId) {
+        return this.repositories.stream().findFirst().flatMap(r -> r.getObjectByID(objectId));
     }
 
     @Override

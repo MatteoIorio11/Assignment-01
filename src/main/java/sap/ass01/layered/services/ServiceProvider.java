@@ -29,10 +29,7 @@ public class ServiceProvider {
 
     public RideService getRideService() {
         if (Objects.isNull(this.rideService)) {
-            this.rideService = new RideService(
-                    this.getUserService().repositories.getFirst(),
-                    this.geteBikeService().repositories.getFirst()
-            );
+            this.rideService = new RideService(this.getUserService(), this.geteBikeService());
         }
         return  this.rideService;
     }

@@ -15,20 +15,20 @@ import java.util.Optional;
 public class RideService implements Service<Ride, String>, InputObserver<RideDTO> {
 
     private final List<Repository<Ride, String>> repositories;
-    private final Repository<User, String> userRepository;
-    private final Repository<EBike, String> eBikeRepository;
+    private final UserService userService;
+    private final EBikeService eBikeService;
 
 
-    public RideService(final Repository<User, String> userRepository, final Repository<EBike, String> eBikeRepository) {
+    public RideService(final UserService userService, final EBikeService eBikeService) {
         this.repositories = new ArrayList<>();
-        this.userRepository = userRepository;
-        this.eBikeRepository = eBikeRepository;
+        this.userService = userService;
+        this.eBikeService = eBikeService;
     }
 
     @Override
     public void notifyUpdateRequested(final RideDTO newValue) {
-        final Optional<User> user = this.userRepository.getObjectByID(newValue.userId());
-        final Optional<EBike> eBike = this.eBikeRepository.getObjectByID(newValue.bikeId());
+        final Optional<User> user = this.userService.getById(newValue.userId());
+        final Optional<EBike> eBike = this.eBikeService.getById(newValue.bikeId());
         if (user.isPresent() && eBike.isPresent()) {
             this.repositories.forEach(repo -> {
                 final String id = repo.generateNewId();
@@ -48,6 +48,11 @@ public class RideService implements Service<Ride, String>, InputObserver<RideDTO
         final List<Ride> rides = new ArrayList<>();
         this.repositories.stream().map(Repository::getAll).forEach(i -> i.forEach(rides::add));
         return rides.stream().distinct().toList();
+    }
+
+    @Override
+    public Optional<Ride> getById(String objectId) {
+        return this.repositories.stream().findFirst().flatMap(r -> r.getObjectByID(objectId));
     }
 
     @Override

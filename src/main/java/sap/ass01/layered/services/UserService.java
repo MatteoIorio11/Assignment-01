@@ -8,11 +8,12 @@ import sap.ass01.layered.services.dto.UserDTO;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class UserService implements Service<User, String>, InputObserver<UserDTO> {
     private static final int USER_DEFAULT_CREDIT = 100;
 
-    protected final List<Repository<User, String>> repositories;
+    private final List<Repository<User, String>> repositories;
 
     public UserService() {
         this.repositories = new ArrayList<>();
@@ -39,6 +40,11 @@ public class UserService implements Service<User, String>, InputObserver<UserDTO
         final List<User> users = new ArrayList<>();
         this.repositories.stream().map(Repository::getAll).forEach(i -> i.forEach(users::add));
         return users.stream().distinct().toList();
+    }
+
+    @Override
+    public Optional<User> getById(String objectId) {
+        return this.repositories.stream().findFirst().flatMap(r -> r.getObjectByID(objectId));
     }
 
     @Override
