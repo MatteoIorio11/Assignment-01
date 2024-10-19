@@ -9,9 +9,9 @@ import sap.ass01.layered.services.dto.UserDTO;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserService implements Service<User>, InputObserver<UserDTO> {
+public class UserService implements Service<User, String>, InputObserver<UserDTO> {
 
-    private final List<Repository<User, ?>> repositories;
+    private final List<Repository<User, String>> repositories;
 
     public UserService() {
         this.repositories = new ArrayList<>();
@@ -32,7 +32,7 @@ public class UserService implements Service<User>, InputObserver<UserDTO> {
     }
 
     @Override
-    public <R extends Repository<User, ?>> void addRepository(final R repository) {
+    public <R extends Repository<User, String>> void addRepository(final R repository) {
         this.repositories.add(repository);
     }
 }
