@@ -1,4 +1,4 @@
-package sap.ass01.layered.persistence.json.repositories;
+package sap.ass01.layered.persistence.repositories;
 
 import sap.ass01.layered.business.User;
 import sap.ass01.layered.persistence.AbstractRepository;
