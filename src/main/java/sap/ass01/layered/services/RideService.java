@@ -41,6 +41,11 @@ public class RideService implements Service<Ride, String>, InputObserver<RideDTO
     }
 
     @Override
+    public void update(final Ride updatedValue) {
+        this.repositories.forEach(r -> r.update(updatedValue));
+    }
+
+    @Override
     public Iterable<Ride> getAll() {
         return this.repositories.stream().findFirst().map(Repository::getAll).orElse(Collections.emptyList());
     }

@@ -37,6 +37,11 @@ public class EBikeService implements Service<EBike, String>, InputObserver<EBike
     }
 
     @Override
+    public void update(final EBike updatedValue) {
+        this.repositories.forEach(r -> r.update(updatedValue));
+    }
+
+    @Override
     public Iterable<EBike> getAll() {
         return this.repositories.stream().findFirst().map(Repository::getAll).orElse(Collections.emptyList());
     }

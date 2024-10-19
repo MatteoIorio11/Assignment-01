@@ -37,6 +37,11 @@ public class UserService implements Service<User, String>, InputObserver<UserDTO
     }
 
     @Override
+    public void update(final User updatedValue) {
+        this.repositories.forEach(r -> r.update(updatedValue));
+    }
+
+    @Override
     public Iterable<User> getAll() {
         return this.repositories.stream().findFirst().map(Repository::getAll).orElse(Collections.emptyList());
     }
