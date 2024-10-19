@@ -8,9 +8,7 @@ import sap.ass01.layered.persistence.Repository;
 import sap.ass01.layered.presentation.observers.InputObserver;
 import sap.ass01.layered.services.dto.RideDTO;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Optional;
+import java.util.*;
 
 public class RideService implements Service<Ride, String>, InputObserver<RideDTO> {
 
@@ -45,9 +43,7 @@ public class RideService implements Service<Ride, String>, InputObserver<RideDTO
 
     @Override
     public Iterable<Ride> getAll() {
-        final List<Ride> rides = new ArrayList<>();
-        this.repositories.stream().map(Repository::getAll).forEach(i -> i.forEach(rides::add));
-        return rides.stream().distinct().toList();
+        return this.repositories.stream().findFirst().map(Repository::getAll).orElse(Collections.emptyList());
     }
 
     @Override

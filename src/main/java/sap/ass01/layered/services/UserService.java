@@ -7,6 +7,7 @@ import sap.ass01.layered.presentation.observers.InputObserver;
 import sap.ass01.layered.services.dto.UserDTO;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,10 +37,8 @@ public class UserService implements Service<User, String>, InputObserver<UserDTO
     }
 
     @Override
-    public List<User> getAll() {
-        final List<User> users = new ArrayList<>();
-        this.repositories.stream().map(Repository::getAll).forEach(i -> i.forEach(users::add));
-        return users.stream().distinct().toList();
+    public Iterable<User> getAll() {
+        return this.repositories.stream().findFirst().map(Repository::getAll).orElse(Collections.emptyList());
     }
 
     @Override

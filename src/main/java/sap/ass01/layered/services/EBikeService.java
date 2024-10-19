@@ -7,6 +7,7 @@ import sap.ass01.layered.persistence.Repository;
 import sap.ass01.layered.presentation.observers.InputObserver;
 import sap.ass01.layered.services.dto.EBikeDTO;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -36,11 +37,8 @@ public class EBikeService implements Service<EBike, String>, InputObserver<EBike
     }
 
     @Override
-    public List<EBike> getAll() {
-        // Don't know why I can't do `flatMap(Repository::getAll).distinct().toList()` :(
-        final List<EBike> ebikes = new ArrayList<>();
-        this.repositories.stream().map(Repository::getAll).forEach(i -> i.forEach(ebikes::add));
-        return ebikes.stream().distinct().toList();
+    public Iterable<EBike> getAll() {
+        return this.repositories.stream().findFirst().map(Repository::getAll).orElse(Collections.emptyList());
     }
 
     @Override
