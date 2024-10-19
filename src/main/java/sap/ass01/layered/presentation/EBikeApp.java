@@ -149,7 +149,8 @@ public class EBikeApp extends JFrame implements ActionListener {
 		    JDialog d = new AddUserDialog(this, new UserService());
 		    d.setVisible(true);
         } else if (e.getSource() == this.startRideButton) {
-	        JDialog d = new RideDialog(this, new RideService());
+			// TODO: inject this dependencies from the Main
+	        JDialog d = new RideDialog(this, new RideService(null, null));
 	        d.setVisible(true);
         }
 	}
