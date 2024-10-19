@@ -57,12 +57,10 @@ public class RideImpl implements Ride {
 	@Override
 	public void start(EBikeApp app) {
 		ongoing = true;
-        rideSimulation = new RideSimulation(this, user, app);
+        rideSimulation = new RideSimulation(this, user);
         RideSimulationControlPanel ridingWindow = new RideSimulationControlPanel(this, app);
         ridingWindow.display();
         rideSimulation.start();
-        
-        
 	}
 	
 	@Override

@@ -1,20 +1,25 @@
 package sap.ass01.layered.business;
 
-import sap.ass01.layered.presentation.EBikeApp;
+import sap.ass01.layered.business.observers.ModelObserver;
+import sap.ass01.layered.business.observers.ModelObserverSource;
 
-public class RideSimulation extends Thread {
+import java.util.ArrayList;
+import java.util.List;
+
+public class RideSimulation extends Thread implements ModelObserverSource {
 	
-	private Ride ride;
-	private User user;
-	
-	private EBikeApp app;
+	private final Ride ride;
+	private final User user;
+
+	private final List<ModelObserver> observers;
+
 	private volatile boolean stopped;
-	
-	public RideSimulation(Ride ride, User user, EBikeApp app) {
+
+	public RideSimulation(Ride ride, User user) {
 		this.ride = ride;
 		this.user = user;
-		this.app = app;
-		stopped = false;
+		this.observers = new ArrayList<>();
+		this.stopped = false;
 	}
 	
 	public void run() {
@@ -71,12 +76,11 @@ public class RideSimulation extends Thread {
 			}
 
 			// NOTE: Notify the EBikeApp about the new position
-			app.refreshView();
+			this.notifyObservers();
 
-			
 			try {
 				Thread.sleep(20);
-			} catch (Exception ex) {}
+			} catch (Exception ignored) {}
 			
 		}
 	}
@@ -84,5 +88,16 @@ public class RideSimulation extends Thread {
 	public void stopSimulation() {
 		stopped = true;
 		interrupt();
+	}
+
+	@Override
+	public void notifyObservers() {
+		this.observers.forEach(ModelObserver::update);
+	}
+
+	@Override
+	public void attach(final ModelObserver observer) {
+		observer.attachToSource(this);
+		this.observers.add(observer);
 	}
 }
