@@ -10,9 +10,9 @@ import sap.ass01.layered.services.dto.EBikeDTO;
 import java.util.List;
 import java.util.ArrayList;
 
-public class EBikeService implements Service<EBike>, InputObserver<EBikeDTO> {
+public class EBikeService implements Service<EBike, String>, InputObserver<EBikeDTO> {
 
-    private final List<Repository<EBike, ?>> repositories;
+    private final List<Repository<EBike, String>> repositories;
 
     public EBikeService() {
         this.repositories = new ArrayList<>();
@@ -35,7 +35,7 @@ public class EBikeService implements Service<EBike>, InputObserver<EBikeDTO> {
     }
 
     @Override
-    public <R extends Repository<EBike, ?>> void addRepository(R repository) {
+    public <R extends Repository<EBike, String>> void addRepository(R repository) {
         this.repositories.add(repository);
     }
 }

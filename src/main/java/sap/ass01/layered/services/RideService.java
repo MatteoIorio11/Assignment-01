@@ -12,15 +12,17 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class RideService implements Service<Ride>, InputObserver<RideDTO> {
+public class RideService implements Service<Ride, String>, InputObserver<RideDTO> {
 
     private final List<Repository<Ride, String>> repositories;
-    private Repository<User, String> userRepository;
-    private Repository<EBike, String> eBikeRepository;
+    private final Repository<User, String> userRepository;
+    private final Repository<EBike, String> eBikeRepository;
 
 
-    public RideService() {
+    public RideService(final Repository<User, String> userRepository, final Repository<EBike, String> eBikeRepository) {
         this.repositories = new ArrayList<>();
+        this.userRepository = userRepository;
+        this.eBikeRepository = eBikeRepository;
     }
 
     @Override
@@ -31,10 +33,9 @@ public class RideService implements Service<Ride>, InputObserver<RideDTO> {
             this.repositories.forEach(repo -> {
                 final String id = repo.generateNewId();
                 final Ride newRide = new RideImpl(id, user.get(), eBike.get());
-                repo.save(newRide);
+                this.add(newRide);
             });
         }
-
     }
 
     @Override
@@ -43,7 +44,7 @@ public class RideService implements Service<Ride>, InputObserver<RideDTO> {
     }
 
     @Override
-    public <R extends Repository<Ride, ?>> void addRepository(final R repository) {
+    public <R extends Repository<Ride, String>> void addRepository(R repository) {
         this.repositories.add(repository);
     }
 }
