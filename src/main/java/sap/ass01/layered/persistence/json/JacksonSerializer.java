@@ -52,6 +52,11 @@ public class JacksonSerializer<T, K> implements Serializer<T, K>{
     }
 
     @Override
+    public void update(T object) {
+        this.serialize(object);
+    }
+
+    @Override
     public Iterable<T> readAll() {
         try {
             return objectMapper.readValue(this.file,
