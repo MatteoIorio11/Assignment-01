@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import sap.ass01.layered.business.EBike;
 import sap.ass01.layered.business.EBikeImpl;
 import sap.ass01.layered.persistence.json.Serializer;
-import sap.ass01.layered.persistence.json.repositories.EBikeRepository;
+import sap.ass01.layered.persistence.repositories.EBikeRepository;
 
 import java.util.List;
 import java.util.Optional;
