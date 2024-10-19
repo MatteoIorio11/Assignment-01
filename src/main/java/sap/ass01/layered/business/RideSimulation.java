@@ -97,7 +97,6 @@ public class RideSimulation extends Thread implements ModelObserverSource {
 
 	@Override
 	public void attach(final ModelObserver observer) {
-		observer.attachToSource(this);
 		this.observers.add(observer);
 	}
 }

@@ -5,7 +5,7 @@ import sap.ass01.layered.business.Ride;
 import sap.ass01.layered.business.RideImpl;
 import sap.ass01.layered.business.User;
 import sap.ass01.layered.persistence.Repository;
-import sap.ass01.layered.presentation.observers.InputObserver;
+import sap.ass01.layered.services.observers.InputObserver;
 import sap.ass01.layered.services.dto.RideDTO;
 
 import java.util.*;
@@ -15,7 +15,6 @@ public class RideService implements Service<Ride, String>, InputObserver<RideDTO
     private final List<Repository<Ride, String>> repositories;
     private final UserService userService;
     private final EBikeService eBikeService;
-
 
     public RideService(final UserService userService, final EBikeService eBikeService) {
         this.repositories = new ArrayList<>();

@@ -3,7 +3,7 @@ package sap.ass01.layered.services;
 import sap.ass01.layered.business.User;
 import sap.ass01.layered.business.UserImpl;
 import sap.ass01.layered.persistence.Repository;
-import sap.ass01.layered.presentation.observers.InputObserver;
+import sap.ass01.layered.services.observers.InputObserver;
 import sap.ass01.layered.services.dto.UserDTO;
 
 import java.util.ArrayList;

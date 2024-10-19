@@ -1,4 +1,4 @@
-package sap.ass01.layered.presentation.observers;
+package sap.ass01.layered.services.observers;
 
 import sap.ass01.layered.services.dto.DTO;
 

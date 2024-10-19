@@ -1,5 +1,7 @@
 package sap.ass01.layered.presentation;
 
+import sap.ass01.layered.business.observers.ModelObserver;
+import sap.ass01.layered.business.observers.ModelObserverSource;
 import sap.ass01.layered.services.EBikeService;
 import sap.ass01.layered.services.ServiceProvider;
 import sap.ass01.layered.services.UserService;
@@ -7,7 +9,7 @@ import sap.ass01.layered.services.UserService;
 import javax.swing.*;
 import java.awt.*;
 
-public class RideVisualisationPanel extends JPanel {
+public class RideVisualisationPanel extends JPanel implements ModelObserver {
         private final long dx;
         private final long dy;
 		private final EBikeService eBikeService;
@@ -48,4 +50,14 @@ public class RideVisualisationPanel extends JPanel {
         public void refresh(){
             repaint();
         }
-    }
+
+	    @Override
+	    public void update() {
+	    	this.refresh();
+	    }
+
+	    @Override
+	    public void attachToSource(ModelObserverSource source) {
+	    	source.attach(this);
+	    }
+}

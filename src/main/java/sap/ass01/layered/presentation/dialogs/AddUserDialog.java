@@ -1,6 +1,6 @@
 package sap.ass01.layered.presentation.dialogs;
 
-import sap.ass01.layered.presentation.observers.InputObserver;
+import sap.ass01.layered.services.observers.InputObserver;
 import sap.ass01.layered.services.UserService;
 import sap.ass01.layered.services.dto.UserDTO;
 

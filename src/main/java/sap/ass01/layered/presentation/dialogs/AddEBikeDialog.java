@@ -1,6 +1,6 @@
 package sap.ass01.layered.presentation.dialogs;
 
-import sap.ass01.layered.presentation.observers.InputObserver;
+import sap.ass01.layered.services.observers.InputObserver;
 import sap.ass01.layered.services.dto.EBikeDTO;
 
 import javax.swing.*;

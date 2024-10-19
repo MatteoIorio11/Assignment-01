@@ -4,7 +4,7 @@ import sap.ass01.layered.business.EBike;
 import sap.ass01.layered.business.EBikeImpl;
 import sap.ass01.layered.business.P2d;
 import sap.ass01.layered.persistence.Repository;
-import sap.ass01.layered.presentation.observers.InputObserver;
+import sap.ass01.layered.services.observers.InputObserver;
 import sap.ass01.layered.services.dto.EBikeDTO;
 
 import java.util.Collections;
