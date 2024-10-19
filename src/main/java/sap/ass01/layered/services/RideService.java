@@ -15,7 +15,6 @@ import java.util.Optional;
 public class RideService implements Service<Ride, String>, InputObserver<RideDTO> {
 
     private final List<Repository<Ride, String>> repositories;
-    // TODO: meglio avere loro due oppure avere il servizio dello user della Ebike ???
     private final Repository<User, String> userRepository;
     private final Repository<EBike, String> eBikeRepository;
 
@@ -45,7 +44,7 @@ public class RideService implements Service<Ride, String>, InputObserver<RideDTO
     }
 
     @Override
-    public <R extends Repository<Ride, String>> void addRepository(R repository) {
+    public <R extends Repository<Ride, String>> void addRepository(final R repository) {
         this.repositories.add(repository);
     }
 }

@@ -35,7 +35,7 @@ public class EBikeService implements Service<EBike, String>, InputObserver<EBike
     }
 
     @Override
-    public <R extends Repository<EBike, String>> void addRepository(R repository) {
+    public <R extends Repository<EBike, String>> void addRepository(final R repository) {
         this.repositories.add(repository);
     }
 }
