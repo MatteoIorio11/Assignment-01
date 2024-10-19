@@ -21,7 +21,7 @@ public abstract class AbstractRepository<T, K> implements Repository<T, K> {
 
     @Override
     public void update(T object) {
-        this.save(object);
+        this.serializer.update(object);
     }
 
     @Override
