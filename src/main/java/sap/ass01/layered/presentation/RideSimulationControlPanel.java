@@ -34,12 +34,9 @@ public class RideSimulationControlPanel extends JFrame {
         add(inputPanel, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
         
-        stopButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                app.endRide(ride.getId());
-        		dispose();
-            }
+        stopButton.addActionListener((e) -> {
+            app.endRide(ride.getId());
+            dispose();
         });
     }
     

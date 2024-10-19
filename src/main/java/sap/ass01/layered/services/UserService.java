@@ -11,7 +11,7 @@ import java.util.List;
 
 public class UserService implements Service<User, String>, InputObserver<UserDTO> {
 
-    private final List<Repository<User, String>> repositories;
+    protected final List<Repository<User, String>> repositories;
 
     public UserService() {
         this.repositories = new ArrayList<>();

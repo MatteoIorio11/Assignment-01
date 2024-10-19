@@ -6,6 +6,7 @@ import sap.ass01.layered.presentation.dialogs.AddUserDialog;
 import sap.ass01.layered.presentation.dialogs.RideDialog;
 import sap.ass01.layered.services.EBikeService;
 import sap.ass01.layered.services.RideService;
+import sap.ass01.layered.services.ServiceProvider;
 import sap.ass01.layered.services.UserService;
 
 import java.awt.BorderLayout;
@@ -30,10 +31,13 @@ public class EBikeApp extends JFrame implements ActionListener {
     private ConcurrentHashMap<String, EBike> bikes;
     private HashMap<String, User> users;
     private HashMap<String, Ride> rides;
+
+	private final ServiceProvider serviceProvider;
     
     private int rideId;
     
-    public EBikeApp(){
+    public EBikeApp(final ServiceProvider serviceProvider){
+		this.serviceProvider = serviceProvider;
         setupView();
         setupModel();
     }
@@ -143,14 +147,13 @@ public class EBikeApp extends JFrame implements ActionListener {
     @Override
 	public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.addEBikeButton) {
-	        JDialog d = new AddEBikeDialog(this, new EBikeService());
+	        JDialog d = new AddEBikeDialog(this, this.serviceProvider.geteBikeService());
 	        d.setVisible(true);
         } else if (e.getSource() == this.addUserButton) {
-		    JDialog d = new AddUserDialog(this, new UserService());
+		    JDialog d = new AddUserDialog(this, this.serviceProvider.getUserService());
 		    d.setVisible(true);
         } else if (e.getSource() == this.startRideButton) {
-			// TODO: inject this dependencies from the Main
-	        JDialog d = new RideDialog(this, new RideService(null, null));
+	        JDialog d = new RideDialog(this, this.serviceProvider.getRideService());
 	        d.setVisible(true);
         }
 	}
@@ -210,7 +213,8 @@ public class EBikeApp extends JFrame implements ActionListener {
 	
 	
 	public static void main(String[] args) {
-		var w = new EBikeApp();
+		final var serviceProvider = new ServiceProvider();
+		var w = new EBikeApp(serviceProvider);
 		w.display();
 	}
 	

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class EBikeService implements Service<EBike, String>, InputObserver<EBikeDTO> {
 
-    private final List<Repository<EBike, String>> repositories;
+    protected final List<Repository<EBike, String>> repositories;
 
     public EBikeService() {
         this.repositories = new ArrayList<>();
