@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserService implements Service<User, String>, InputObserver<UserDTO> {
+    private static final int USER_DEFAULT_CREDIT = 100;
 
     protected final List<Repository<User, String>> repositories;
 
@@ -23,12 +24,21 @@ public class UserService implements Service<User, String>, InputObserver<UserDTO
     }
 
     private User fromDTO(final UserDTO dto) {
-        return new UserImpl(dto.id());
+        final var user = new UserImpl(dto.id());
+        user.rechargeCredit(USER_DEFAULT_CREDIT);
+        return user;
     }
 
     @Override
     public void add(final User newValue) {
         this.repositories.forEach(r -> r.save(newValue));
+    }
+
+    @Override
+    public List<User> getAll() {
+        final List<User> users = new ArrayList<>();
+        this.repositories.stream().map(Repository::getAll).forEach(i -> i.forEach(users::add));
+        return users.stream().distinct().toList();
     }
 
     @Override

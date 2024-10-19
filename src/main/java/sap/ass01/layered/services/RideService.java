@@ -44,6 +44,13 @@ public class RideService implements Service<Ride, String>, InputObserver<RideDTO
     }
 
     @Override
+    public Iterable<Ride> getAll() {
+        final List<Ride> rides = new ArrayList<>();
+        this.repositories.stream().map(Repository::getAll).forEach(i -> i.forEach(rides::add));
+        return rides.stream().distinct().toList();
+    }
+
+    @Override
     public <R extends Repository<Ride, String>> void addRepository(final R repository) {
         this.repositories.add(repository);
     }

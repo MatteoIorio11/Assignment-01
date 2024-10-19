@@ -9,6 +9,7 @@ import sap.ass01.layered.services.dto.EBikeDTO;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.stream.Stream;
 
 public class EBikeService implements Service<EBike, String>, InputObserver<EBikeDTO> {
 
@@ -32,6 +33,14 @@ public class EBikeService implements Service<EBike, String>, InputObserver<EBike
     @Override
     public void add(final EBike newValue) {
         this.repositories.forEach(r -> r.save(newValue));
+    }
+
+    @Override
+    public List<EBike> getAll() {
+        // Don't know why I can't do `flatMap(Repository::getAll).distinct().toList()` :(
+        final List<EBike> ebikes = new ArrayList<>();
+        this.repositories.stream().map(Repository::getAll).forEach(i -> i.forEach(ebikes::add));
+        return ebikes.stream().distinct().toList();
     }
 
     @Override
