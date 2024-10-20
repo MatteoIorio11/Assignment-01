@@ -13,7 +13,12 @@ public class UserService extends AbstractObserverService<UserDTO, User> {
 
     @Override
     public void notifyUpdateRequested(final UserDTO newValue) {
-        this.add(this.fromDTO(newValue));
+        final User user = this.fromDTO(newValue);
+        if (this.getById(user.getId()).isEmpty()) {
+            this.add(user);
+        }else{
+            System.err.println("User ID<<" + user.getId() + ">>, already exists.");
+        }
     }
 
     private User fromDTO(final UserDTO dto) {
