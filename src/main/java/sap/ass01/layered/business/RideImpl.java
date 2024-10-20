@@ -56,8 +56,9 @@ public class RideImpl implements Ride {
 
 	@Override
 	public void start(final List<Service<?, String>> services) {
-		ongoing = true;
-        rideSimulation = new RideSimulation(this, user, services);
+		this.ongoing = true;
+        this.rideSimulation = new RideSimulation(this, user, services);
+		this.rideSimulation.start();
 	}
 	
 	@Override
