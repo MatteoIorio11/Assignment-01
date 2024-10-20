@@ -95,6 +95,7 @@ public class RideSimulation extends Thread implements ModelObserverSource {
 	}
 
 	private void updateModel() {
+		log("Updating model...");
 		Service.filterIsInstance(services, RideService.class).stream().findFirst().ifPresent(s -> s.update(this.ride));
 		Service.filterIsInstance(services, UserService.class).stream().findFirst().ifPresent(s -> s.update(this.user));
 		Service.filterIsInstance(services, EBikeService.class).stream().findFirst().ifPresent(s -> s.update(this.ride.getEBike()));
@@ -115,6 +116,11 @@ public class RideSimulation extends Thread implements ModelObserverSource {
 
 	@Override
 	public void attach(final ModelObserver observer) {
+		log("Attaching an observer: " + observer);
 		this.observers.add(observer);
+	}
+
+	private void log(final String msg) {
+		System.out.println("[RideSimulation - " + this.ride.getId() + " ]: " + msg);
 	}
 }
