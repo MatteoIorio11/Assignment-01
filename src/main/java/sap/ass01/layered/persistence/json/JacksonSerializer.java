@@ -31,7 +31,7 @@ public class JacksonSerializer<T, K> implements Serializer<T, K>{
     }
 
     @Override
-    public void serialize(T object) {
+    public void serialize(final T object) {
         final List<T> myObjects = Serializer.iterableToList(this.readAll());
         final int index = myObjects.indexOf(object);
         // Replace the object if exists
@@ -44,7 +44,7 @@ public class JacksonSerializer<T, K> implements Serializer<T, K>{
     }
 
     @Override
-    public void serializeAll(Iterable<T> objects) {
+    public void serializeAll(final Iterable<T> objects) {
         try {
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(this.file, objects);
         }catch (IOException exception) {
@@ -53,7 +53,7 @@ public class JacksonSerializer<T, K> implements Serializer<T, K>{
     }
 
     @Override
-    public void update(T object) {
+    public void update(final T object) {
         this.serialize(object);
     }
 
@@ -69,7 +69,7 @@ public class JacksonSerializer<T, K> implements Serializer<T, K>{
     }
 
     @Override
-    public Optional<T> readByID(K key) {
+    public Optional<T> readByID(final K key) {
         final Iterable<T> output = this.readAll();
         for (final T obj : output) {
             try {
