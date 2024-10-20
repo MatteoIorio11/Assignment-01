@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
@@ -100,9 +101,10 @@ public class JacksonSerializer<T, K> implements Serializer<T, K>{
     }
 
     private void checkDirectory() {
-        if (!Files.exists(Paths.get(JacksonSerializer.RESOURCE_PATH))) {
+        final Path path = Paths.get(JacksonSerializer.RESOURCE_PATH);
+        if (!Files.exists(path)) {
             try {
-                Files.createDirectory(Paths.get(this.file.getPath()));
+                Files.createDirectory(path);
             }catch (IOException exception) {
                 System.err.println(exception.getMessage());
             }
