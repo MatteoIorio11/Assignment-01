@@ -13,7 +13,12 @@ public class EBikeService extends AbstractObserverService<EBikeDTO, EBike> {
 
     @Override
     public void notifyUpdateRequested(final EBikeDTO newValue) {
-        this.add(this.fromDTO(newValue));
+        final EBike eBike = this.fromDTO(newValue);
+        if(this.getById(eBike.getId()).isEmpty()) {
+            this.add(eBike);
+        }else{
+            System.err.println("Ebike ID<<" + eBike.getId() + ">>, already exists.");
+        }
     }
 
     private EBike fromDTO(final EBikeDTO dto) {
