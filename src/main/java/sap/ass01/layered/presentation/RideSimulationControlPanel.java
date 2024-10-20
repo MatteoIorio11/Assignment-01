@@ -1,19 +1,20 @@
 package sap.ass01.layered.presentation;
 
 import sap.ass01.layered.services.dto.RideDTO;
-import sap.ass01.layered.services.observers.ActionObserver;
-import sap.ass01.layered.services.observers.ActionObserverSource;
+import sap.ass01.layered.services.observers.StopSimulationObserver;
+import sap.ass01.layered.services.observers.StopSimulationObserverSource;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RideSimulationControlPanel extends JFrame implements ActionObserverSource {
+public class RideSimulationControlPanel extends JFrame implements StopSimulationObserverSource {
 
-    private final List<ActionObserver> observers = new ArrayList<>();
+    private final List<StopSimulationObserver> observers = new ArrayList<>();
 
     public RideSimulationControlPanel(final RideDTO ride) {
+        super("Ride simulation for "  + ride.getId());
     	setSize(400, 200);
 
         JButton stopButton = new JButton("Stop Riding");
@@ -30,7 +31,7 @@ public class RideSimulationControlPanel extends JFrame implements ActionObserver
         add(buttonPanel, BorderLayout.SOUTH);
         
         stopButton.addActionListener((e) -> {
-            this.observers.forEach(ActionObserver::notifyUpdateRequested);
+            this.observers.forEach(o -> o.notifyStopSimulation(ride.getId().orElseThrow(() -> new IllegalStateException("ride does not have a valid id"))));
             dispose();
         });
     }
@@ -42,7 +43,7 @@ public class RideSimulationControlPanel extends JFrame implements ActionObserver
     }
 
     @Override
-    public void addObserver(final ActionObserver observer) {
+    public void addObserver(final StopSimulationObserver observer) {
         this.observers.add(observer);
     }
 }

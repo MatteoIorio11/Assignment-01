@@ -14,12 +14,12 @@ public class EBikeApp {
     private HashMap<String, User> users;
     private HashMap<String, Ride> rides;
 
-	private final EBikeAppView view;
+	private EBikeAppView view;
     
     private int rideId;
     
     public EBikeApp(final ServiceProvider serviceProvider){
-		this.view = new EBikeAppView(serviceProvider);
+//		this.view = new EBikeAppView(serviceProvider);
         setupModel();
     }
 

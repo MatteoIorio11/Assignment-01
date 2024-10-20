@@ -22,7 +22,7 @@ public abstract class AbstractObserverService<D extends DTO, T> implements Servi
     }
 
     @Override
-    public void notifyObservers() {
+    public void notifyStepDone() {
         this.observers.forEach(ModelObserver::update);
     }
 
@@ -34,13 +34,13 @@ public abstract class AbstractObserverService<D extends DTO, T> implements Servi
     @Override
     public void add(T newValue) {
         this.repositories.forEach(r -> r.save(newValue));
-        this.notifyObservers();
+        this.notifyStepDone();
     }
 
     @Override
     public void update(T updatedValue) {
         this.repositories.forEach(r -> r.update(updatedValue));
-        this.notifyObservers();
+        this.notifyStepDone();
     }
 
     @Override

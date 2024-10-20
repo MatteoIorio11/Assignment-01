@@ -55,17 +55,19 @@ public class RideImpl implements Ride {
 	
 
 	@Override
-	public void start(final List<Service<?, String>> services) {
+	public RideSimulation start(final List<Service<?, String>> services) {
 		this.ongoing = true;
         this.rideSimulation = new RideSimulation(this, user, services);
 		this.rideSimulation.start();
+		return this.rideSimulation;
 	}
 	
 	@Override
 	public void end() {
 		endDate = Optional.of(new Date());
 		ongoing = false;
-		rideSimulation.stopSimulation();
+		// missing in original implementation
+		this.ebike.updateState(EBike.EBikeState.AVAILABLE);
 	}
 
 	@Override

@@ -3,9 +3,11 @@ package sap.ass01.layered.presentation.dialogs;
 import sap.ass01.layered.presentation.RideSimulationControlPanel;
 import sap.ass01.layered.services.observers.InputObserver;
 import sap.ass01.layered.services.dto.RideDTO;
+import sap.ass01.layered.services.observers.StopSimulationObserver;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Optional;
 
 public class RideDialog extends AbstractDialog<RideDTO> {
 
@@ -14,8 +16,11 @@ public class RideDialog extends AbstractDialog<RideDTO> {
     private JButton startButton;
     private JButton cancelButton;
 
+    private Optional<StopSimulationObserver> actionObservers;
+
     public RideDialog(final JFrame parentFrame, final InputObserver<RideDTO> controller) {
         super(parentFrame, controller, "Start Riding an EBike");
+        this.actionObservers = Optional.empty();
     }
 
     @Override
@@ -48,11 +53,17 @@ public class RideDialog extends AbstractDialog<RideDTO> {
             final var bikeId = idEBikeField.getText();
             final var userRiding = userName.getText();
             final var ride = new RideDTO(bikeId, userRiding);
-            this.controller.notifyUpdateRequested(ride);
+            this.controller.notifyUpdateRequested(ride); // InputObserver<RideDTO>
             dispose();
-            new RideSimulationControlPanel(ride).display();
+            var rdcp = new RideSimulationControlPanel(ride);
+            this.actionObservers.ifPresent(rdcp::addObserver);
+            rdcp.display();
         });
         
         cancelButton.addActionListener((e) -> dispose());
+    }
+
+    public void attachObserver(final StopSimulationObserver obs) {
+        this.actionObservers = Optional.of(obs);
     }
 }

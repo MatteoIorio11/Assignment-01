@@ -85,7 +85,7 @@ public class RideSimulation extends Thread implements ModelObserverSource {
 
 			// NOTE: Notify the EBikeApp about the new position
 			this.updateModel();
-			this.notifyObservers();
+			this.notifyStepDone();
 
 			try {
 				Thread.sleep(20);
@@ -103,14 +103,14 @@ public class RideSimulation extends Thread implements ModelObserverSource {
 
 	public void stopSimulation() {
 		stopped = true;
-		// missing in original implementation
-		this.ride.getEBike().updateState(EBike.EBikeState.AVAILABLE);
-		this.notifyObservers();
+		this.ride.end();
+		this.updateModel();
+		this.notifyStepDone();
 		interrupt();
 	}
 
 	@Override
-	public void notifyObservers() {
+	public void notifyStepDone() {
 		this.observers.forEach(ModelObserver::update);
 	}
 

@@ -4,6 +4,7 @@ import sap.ass01.layered.presentation.dialogs.AddEBikeDialog;
 import sap.ass01.layered.presentation.dialogs.AddUserDialog;
 import sap.ass01.layered.presentation.dialogs.RideDialog;
 import sap.ass01.layered.services.ServiceProvider;
+import sap.ass01.layered.services.observers.StopSimulationObserver;
 
 import javax.swing.*;
 import java.awt.*;
@@ -66,7 +67,9 @@ public class EBikeAppView extends JFrame implements ActionListener {
         } else if (e.getSource() == this.addUserButton) {
             new AddUserDialog(this, this.serviceProvider.getUserService()).setVisible(true);
         } else if (e.getSource() == this.startRideButton) {
-            new RideDialog(this, this.serviceProvider.getRideService()).setVisible(true);
+            final RideDialog rd = new RideDialog(this, this.serviceProvider.getRideService());
+            rd.attachObserver(this.serviceProvider.getRideService());
+            rd.setVisible(true);
         }
     }
 }
