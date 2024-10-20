@@ -89,9 +89,20 @@ public class JacksonSerializer<T, K> implements Serializer<T, K>{
     }
 
     private void checkFile() {
+        this.checkDirectory();
         if (!Files.exists(Paths.get(this.file.getPath()))) {
             try {
                 Files.createFile(Paths.get(this.file.getPath()));
+            }catch (IOException exception) {
+                System.err.println(exception.getMessage());
+            }
+        }
+    }
+
+    private void checkDirectory() {
+        if (!Files.exists(Paths.get(JacksonSerializer.RESOURCE_PATH))) {
+            try {
+                Files.createDirectory(Paths.get(this.file.getPath()));
             }catch (IOException exception) {
                 System.err.println(exception.getMessage());
             }
