@@ -3,6 +3,8 @@ package sap.ass01.layered.services;
 import sap.ass01.layered.business.EBike;
 import sap.ass01.layered.business.EBikeImpl;
 import sap.ass01.layered.business.P2d;
+import sap.ass01.layered.business.observers.ModelObserver;
+import sap.ass01.layered.business.observers.ModelObserverSource;
 import sap.ass01.layered.persistence.Repository;
 import sap.ass01.layered.services.observers.InputObserver;
 import sap.ass01.layered.services.dto.EBikeDTO;
@@ -12,12 +14,15 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class EBikeService implements Service<EBike, String>, InputObserver<EBikeDTO> {
+public class EBikeService implements Service<EBike, String>, InputObserver<EBikeDTO>, ModelObserverSource {
 
     private final List<Repository<EBike, String>> repositories;
 
+    private final List<ModelObserver> observers;
+
     public EBikeService() {
         this.repositories = new ArrayList<>();
+        this.observers = new ArrayList<>();
     }
 
     @Override
@@ -34,11 +39,13 @@ public class EBikeService implements Service<EBike, String>, InputObserver<EBike
     @Override
     public void add(final EBike newValue) {
         this.repositories.forEach(r -> r.save(newValue));
+        this.notifyObservers();
     }
 
     @Override
     public void update(final EBike updatedValue) {
         this.repositories.forEach(r -> r.update(updatedValue));
+        this.notifyObservers();
     }
 
     @Override
@@ -54,5 +61,15 @@ public class EBikeService implements Service<EBike, String>, InputObserver<EBike
     @Override
     public <R extends Repository<EBike, String>> void addRepository(final R repository) {
         this.repositories.add(repository);
+    }
+
+    @Override
+    public void notifyObservers() {
+        this.observers.forEach(ModelObserver::update);
+    }
+
+    @Override
+    public void attach(final ModelObserver observer) {
+        this.observers.add(observer);
     }
 }

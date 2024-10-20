@@ -4,20 +4,24 @@ import sap.ass01.layered.business.EBike;
 import sap.ass01.layered.business.Ride;
 import sap.ass01.layered.business.RideImpl;
 import sap.ass01.layered.business.User;
+import sap.ass01.layered.business.observers.ModelObserver;
+import sap.ass01.layered.business.observers.ModelObserverSource;
 import sap.ass01.layered.persistence.Repository;
 import sap.ass01.layered.services.observers.InputObserver;
 import sap.ass01.layered.services.dto.RideDTO;
 
 import java.util.*;
 
-public class RideService implements Service<Ride, String>, InputObserver<RideDTO> {
+public class RideService implements Service<Ride, String>, InputObserver<RideDTO>, ModelObserverSource {
 
     private final List<Repository<Ride, String>> repositories;
+    private final List<ModelObserver> observers;
     private final UserService userService;
     private final EBikeService eBikeService;
 
     public RideService(final UserService userService, final EBikeService eBikeService) {
         this.repositories = new ArrayList<>();
+        this.observers = new ArrayList<>();
         this.userService = userService;
         this.eBikeService = eBikeService;
     }
@@ -48,11 +52,13 @@ public class RideService implements Service<Ride, String>, InputObserver<RideDTO
     @Override
     public void add(final Ride newValue) {
         this.repositories.forEach(r -> r.save(newValue));
+        this.notifyObservers();
     }
 
     @Override
     public void update(final Ride updatedValue) {
         this.repositories.forEach(r -> r.update(updatedValue));
+        this.notifyObservers();
     }
 
     @Override
@@ -68,5 +74,15 @@ public class RideService implements Service<Ride, String>, InputObserver<RideDTO
     @Override
     public <R extends Repository<Ride, String>> void addRepository(final R repository) {
         this.repositories.add(repository);
+    }
+
+    @Override
+    public void notifyObservers() {
+        this.observers.forEach(ModelObserver::update);
+    }
+
+    @Override
+    public void attach(final ModelObserver observer) {
+        this.observers.add(observer);
     }
 }

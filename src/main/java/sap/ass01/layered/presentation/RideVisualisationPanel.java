@@ -21,6 +21,9 @@ public class RideVisualisationPanel extends JPanel implements ModelObserver {
             dy = h/2 - 20;
 			this.eBikeService = serviceProvider.geteBikeService();
 			this.userService = serviceProvider.getUserService();
+			this.userService.attach(this);
+			this.eBikeService.attach(this);
+			this.refresh();
         }
 
 		@Override
