@@ -46,6 +46,7 @@ public class RideService implements Service<Ride, String>, InputObserver<RideDTO
 
     private void startRide(final Ride ride) {
         // TODO: also quite shitty, a list of stuff then later filtered with `filterIsInstance` :\
+        ride.getEBike().updateState(EBike.EBikeState.IN_USE);
         ride.start(List.of(this, userService, eBikeService));
     }
 
