@@ -50,8 +50,7 @@ public class RideDialog extends AbstractDialog<RideDTO> {
             final var ride = new RideDTO(bikeId, userRiding);
             this.controller.notifyUpdateRequested(ride);
             dispose();
-            // Show the ride control panel
-            new RideSimulationControlPanel(ride);
+            new RideSimulationControlPanel(ride).setVisible(true);
         });
         
         cancelButton.addActionListener((e) -> dispose());
