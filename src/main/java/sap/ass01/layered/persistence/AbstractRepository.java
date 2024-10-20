@@ -10,26 +10,26 @@ public abstract class AbstractRepository<T, K> implements Repository<T, K> {
         this.serializer = serializer;
     }
     @Override
-    public void saveAll(Iterable<T> objects) {
+    public synchronized void saveAll(Iterable<T> objects) {
         this.serializer.serializeAll(objects);
     }
 
     @Override
-    public void save(T object) {
+    public synchronized void save(T object) {
         this.serializer.serialize(object);
     }
 
     @Override
-    public void update(T object) {
+    public synchronized void update(T object) {
         this.serializer.update(object);
     }
 
     @Override
-    public Iterable<T> getAll() {
+    public synchronized Iterable<T> getAll() {
         return this.serializer.readAll();
     }
     @Override
-    public Optional<T> getObjectByID(K objectKey) {
+    public synchronized Optional<T> getObjectByID(K objectKey) {
         return this.serializer.readByID(objectKey);
     }
 
