@@ -2,8 +2,7 @@ package sap.ass01.layered.business;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
-public interface EBike {
-    String getId();
+public interface EBike extends Business<EBike, String> {
 
     EBikeState getState();
 

@@ -1,19 +1,28 @@
 package sap.ass01.layered.business;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonTypeId;
+import com.fasterxml.jackson.annotation.*;
 import sap.ass01.layered.persistence.Key;
+import sap.ass01.layered.persistence.Repository;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 
-public class UserImpl implements User {
+@JsonIgnoreProperties(ignoreUnknown = true)  // Ignore unknown properties like "available"
+public class UserImpl implements User, Business<User, String> {
 	@JsonProperty("id")  // Ensure the 'id' field is serialized
 	private final String id;
 
 	@JsonProperty("credit")  // Ensure the 'credit' field is serialized
-	private int credit;	public UserImpl(String id) {
-		this(id, 0);
+	private int credit;
+	@JsonIgnore
+	private List<Repository<User, String>> repositories = new LinkedList<>();
+	public UserImpl(String id) {
+		this(id, 100);
+	}
+	public UserImpl(String id, final List<Repository<User, String>> repositories) {
+		this(id);
+		this.repositories = repositories;
 	}
 	@JsonCreator()
 	public UserImpl(@JsonProperty("id") String id, @JsonProperty("credit") int credit) {
@@ -62,5 +71,19 @@ public class UserImpl implements User {
 
 	public String toString() {
 		return "User: " + this.getId();
+	}
+
+	@Override
+	public void injectRepository(Repository<User, String> repository) {
+		this.repositories.add(repository);
+	}
+	@Override
+	public void save() {
+		this.repositories.forEach(repo -> repo.save(this));
+	}
+
+	@Override
+	public void update() {
+		this.repositories.forEach(repo -> repo.update(this));
 	}
 }

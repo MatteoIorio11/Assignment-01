@@ -5,15 +5,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import sap.ass01.layered.persistence.Key;
+import sap.ass01.layered.persistence.Repository;
 import sap.ass01.layered.services.Service;
 
-import java.util.List;
-import java.util.Date;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @JsonIgnoreProperties(ignoreUnknown = true)  // Ignore unknown properties like "available"
-public class RideImpl implements Ride {
+public class RideImpl implements Ride{
 	@JsonProperty("startDate")
 	private Date startedDate;
 	@JsonProperty("endDate")
@@ -27,6 +25,8 @@ public class RideImpl implements Ride {
 	@JsonProperty("id")
 	private String id;
 	@JsonIgnore
+	private List<Repository<Ride, String>> repositories = new LinkedList<>();
+	@JsonIgnore
 	private RideSimulation rideSimulation;
 
 	public RideImpl(String id, User user, EBike ebike) {
@@ -35,6 +35,12 @@ public class RideImpl implements Ride {
 		this.endDate = Optional.empty();
 		this.user = user;
 		this.ebike = ebike;
+	}
+
+	public RideImpl(String id, User user, EBike ebike, final List<Repository<Ride, String>> repositories) {
+		this(id, user, ebike);
+		ebike.update();
+		this.repositories = repositories;
 	}
 
 	@JsonCreator
@@ -116,5 +122,19 @@ public class RideImpl implements Ride {
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
+	}
+
+	@Override
+	public void injectRepository(Repository<Ride, String> repository) {
+		this.repositories.add(repository);
+	}
+	@Override
+	public void save() {
+		this.repositories.forEach(repo -> repo.save(this));
+	}
+
+	@Override
+	public void update() {
+		this.repositories.forEach(repo -> repo.update(this));
 	}
 }

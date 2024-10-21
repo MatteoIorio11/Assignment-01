@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-public interface Ride {
+public interface Ride extends Business<Ride, String>  {
     String getId();
     RideSimulation start(List<Service<?, String>> services);
 

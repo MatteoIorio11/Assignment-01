@@ -5,7 +5,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import sap.ass01.layered.persistence.Key;
+import sap.ass01.layered.persistence.Repository;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 
 @JsonIgnoreProperties(ignoreUnknown = true)  // Ignore unknown properties like "available"
@@ -22,11 +25,18 @@ public class EBikeImpl implements EBike {
 	private double speed;
 	@JsonProperty("battery")
 	private int batteryLevel;  /* 0..100 */
+	@JsonIgnore
+	private List<Repository<EBike, String>> repositoryList = new LinkedList<>();
 
-	public EBikeImpl(String id) {
+	public EBikeImpl(final String id, final List<Repository<EBike, String>> repositoryList) {
 		this(id, EBikeState.AVAILABLE, new P2d(0, 0), 0, 100);
+		this.repositoryList = repositoryList;
+		System.out.println("<<>>" + this.repositoryList);
 	}
 
+	public EBikeImpl(final String id) {
+		this(id, new LinkedList<>());
+	}
 	@JsonCreator()
 	public EBikeImpl(@JsonProperty("id") String id,
 					 @JsonProperty("state") EBikeState state,
@@ -129,5 +139,20 @@ public class EBikeImpl implements EBike {
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
+	}
+
+	@Override
+	public void injectRepository(final Repository<EBike, String> repository) {
+		this.repositoryList.add(repository);
+	}
+
+	@Override
+	public void save() {
+		this.repositoryList.forEach(repo -> repo.save(this));
+	}
+
+	@Override
+	public void update() {
+		this.repositoryList.forEach(repo -> repo.update(this));
 	}
 }
