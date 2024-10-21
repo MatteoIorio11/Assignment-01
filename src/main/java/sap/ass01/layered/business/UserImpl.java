@@ -18,7 +18,7 @@ public class UserImpl implements User, Business<User, String> {
 	@JsonIgnore
 	private List<Repository<User, String>> repositories = new LinkedList<>();
 	public UserImpl(String id) {
-		this(id, 100);
+		this(id, 0);
 	}
 	public UserImpl(String id, final List<Repository<User, String>> repositories) {
 		this(id);
