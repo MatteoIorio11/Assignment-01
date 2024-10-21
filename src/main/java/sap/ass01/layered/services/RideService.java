@@ -22,12 +22,15 @@ public class RideService extends AbstractObserverService<RideDTO, Ride> implemen
     @Override
     public void notifyUpdateRequested(final RideDTO newValue) {
         final Optional<User> user = this.userService.getById(newValue.userId());
-        final Optional<EBike> eBike = this.eBikeService.getById(newValue.bikeId());
+        final Optional<EBike> eBike =this.eBikeService.getById(newValue.bikeId());
         final List<Ride> rides = new ArrayList<>();
         if (user.isPresent() && eBike.isPresent()) {
+            this.eBikeService.getRepositories().forEach(rep -> eBike.get().injectRepository(rep));
+            this.userService.getRepositories().forEach(rep -> user.get().injectRepository(rep));
+
             this.repositories.forEach(repo -> {
                 final String id = repo.generateNewId();
-                final Ride newRide = new RideImpl(id, user.get(), eBike.get());
+                final Ride newRide = new RideImpl(id, user.get(), eBike.get(), this.repositories);
                 rides.add(newRide);
                 this.add(newRide);
             });

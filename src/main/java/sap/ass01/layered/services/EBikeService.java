@@ -14,7 +14,7 @@ public class EBikeService extends AbstractObserverService<EBikeDTO, EBike> {
     @Override
     public void notifyUpdateRequested(final EBikeDTO newValue) {
         final EBike eBike = this.fromDTO(newValue);
-        if(this.getById(eBike.getId()).isEmpty()) {
+        if (this.getById(eBike.getId()).isEmpty()) {
             this.add(eBike);
         }else{
             System.err.println("Ebike ID<<" + eBike.getId() + ">>, already exists.");
@@ -22,7 +22,7 @@ public class EBikeService extends AbstractObserverService<EBikeDTO, EBike> {
     }
 
     private EBike fromDTO(final EBikeDTO dto) {
-       final var bike = new EBikeImpl(dto.id());
+       final var bike = new EBikeImpl(dto.id(), this.getRepositories());
        bike.updateLocation(new P2d(Double.parseDouble(dto.xCoord()), Double.parseDouble(dto.yCoord())));
        return bike;
     }

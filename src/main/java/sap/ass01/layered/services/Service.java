@@ -18,6 +18,8 @@ public interface Service<T, K> {
 
     <R extends Repository<T, K>> void addRepository(R repository);
 
+    List<Repository<T, K>> getRepositories();
+
     static <T> List<T> filterIsInstance(List<? extends Service<?, String>> services, Class<T> clazz) {
         return services.stream()
                 .filter(clazz::isInstance)

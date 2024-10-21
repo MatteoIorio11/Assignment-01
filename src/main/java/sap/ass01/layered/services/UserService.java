@@ -22,7 +22,7 @@ public class UserService extends AbstractObserverService<UserDTO, User> {
     }
 
     private User fromDTO(final UserDTO dto) {
-        final var user = new UserImpl(dto.id());
+        final var user = new UserImpl(dto.id(), this.repositories);
         user.rechargeCredit(USER_DEFAULT_CREDIT);
         return user;
     }
