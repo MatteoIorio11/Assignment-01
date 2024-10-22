@@ -34,9 +34,9 @@ public class RideService extends AbstractObserverService<RideDTO, Ride> implemen
                     rides.add(newRide);
                     this.add(newRide);
                 });
-                final Ride roba = rides.stream().findFirst().orElseThrow();
-                newValue.setId(roba.getId());
-                this.startRide(roba);
+                final Ride newRide = rides.stream().findFirst().orElseThrow();
+                newValue.setId(newRide.getId());
+                this.startRide(newRide);
             }
         }
     }
