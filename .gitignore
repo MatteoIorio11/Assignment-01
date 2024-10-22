@@ -19,3 +19,5 @@ buildNumber.properties
 bin/
 **/resources/**
 .idea/
+
+*.jar
