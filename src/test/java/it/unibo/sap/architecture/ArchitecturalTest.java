@@ -13,14 +13,11 @@ import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
 @RunWith(ArchUnitRunner.class)
 @AnalyzeClasses(packages = "src")
 public class ArchitecturalTest {
-    // Specify the root packages of the business, persistence, and presentation layers
     private static final String BUSINESS_LAYER_PACKAGE = "..business..";
     private static final String PERSISTENCE_LAYER_PACKAGE = "..persistence..";
     private static final String PRESENTATION_LAYER_PACKAGE = "..presentation..";
     private static final String SERVICE_LAYER_PACKAGE = "..service..";
 
-
-    // Load the classes of the whole application
     JavaClasses importedClasses = new ClassFileImporter().importPackages("src");
 
     @ArchTest
