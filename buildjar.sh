@@ -1,2 +1,2 @@
 #!/bin/bash
-jar cvf RidePlugin.jar target/classes/sap/ass01/plugin/*
+jar cvf A.jar target/classes/sap/ass01/plugin/plugins/*
