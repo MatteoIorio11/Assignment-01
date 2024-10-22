@@ -1,8 +1,6 @@
 package sap.ass01.exagonal.presentation;
 
 
-import sap.ass01.exagonal.business.RidePlugin;
-import sap.ass01.exagonal.plugin.PluginClassLoader;
 import sap.ass01.exagonal.presentation.dialogs.AddEBikeDialog;
 import sap.ass01.exagonal.presentation.dialogs.AddUserDialog;
 import sap.ass01.exagonal.presentation.dialogs.RideDialog;
@@ -83,7 +81,6 @@ public class EBikeAppView extends JFrame implements ActionListener {
                 final File selectedFile = fileDialog.getSelectedFile();
                 final PluginService p = new PluginService(serviceProvider);
                 try {
-                    System.out.println("ciao");
                     p.loadRidePlugin(selectedFile);
                     final JButton button = new JButton("Apply Plugin: " + selectedFile.getName());
                     button.addActionListener(i -> {

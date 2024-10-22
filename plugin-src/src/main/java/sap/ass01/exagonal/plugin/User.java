@@ -1,4 +1,4 @@
-package sap.ass01.plugin;
+package sap.ass01.exagonal.plugin;
 
 public interface User {
     String getId();

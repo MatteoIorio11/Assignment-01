@@ -1,4 +1,4 @@
-package sap.ass01.plugin;
+package sap.ass01.exagonal.plugin;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import sap.ass01.exagonal.business.P2d;

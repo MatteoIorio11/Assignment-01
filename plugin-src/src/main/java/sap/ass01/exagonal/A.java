@@ -1,4 +1,4 @@
-package sap.ass01.plugin.plugins;
+package sap.ass01.plugin;
 
 import sap.ass01.plugin.Ride;
 import sap.ass01.plugin.RidePlugin;

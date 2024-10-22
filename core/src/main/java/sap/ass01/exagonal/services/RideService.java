@@ -1,5 +1,6 @@
 package sap.ass01.exagonal.services;
 
+import sap.ass01.exagonal.plugin.RidePlugin;
 import sap.ass01.exagonal.business.*;
 import sap.ass01.exagonal.services.dto.RideDTO;
 import sap.ass01.exagonal.services.observers.StopSimulationObserver;

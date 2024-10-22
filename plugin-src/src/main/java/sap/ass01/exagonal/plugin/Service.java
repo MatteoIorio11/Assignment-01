@@ -1,6 +1,5 @@
-package sap.ass01.plugin;
+package sap.ass01.exagonal.plugin;
 
-import sap.ass01.exagonal.persistence.Repository;
 
 import java.util.List;
 import java.util.Optional;
