@@ -10,13 +10,15 @@ public class RideService extends AbstractObserverService<RideDTO, Ride> implemen
 
     private final UserService userService;
     private final EBikeService eBikeService;
-    private final HashMap<String, RideSimulation> ridez;
+    private final Map<String, RideSimulation> ridez;
+    private final Map<String, RidePlugin> ridePluginHashMap;
 
     public RideService(final UserService userService, final EBikeService eBikeService) {
         super();
         this.userService = userService;
         this.eBikeService = eBikeService;
         this.ridez = new HashMap<>();
+        this.ridePluginHashMap = new HashMap<>();
     }
 
     @Override
@@ -44,6 +46,15 @@ public class RideService extends AbstractObserverService<RideDTO, Ride> implemen
         ride.getEBike().updateState(EBike.EBikeState.IN_USE);
         final var sim = ride.start(List.of(this, userService, eBikeService));
         this.ridez.put(ride.getId(), sim);
+    }
+
+    public void applyEffects(final Ride ride, final String pluginID) {
+        RidePlugin p = this.ridePluginHashMap.get(pluginID);
+        p.applyEffect(ride);
+    }
+
+    public void registerPlugin(final RidePlugin rideP, final String pluginID) {
+        this.ridePluginHashMap.put(pluginID, rideP);
     }
 
     @Override

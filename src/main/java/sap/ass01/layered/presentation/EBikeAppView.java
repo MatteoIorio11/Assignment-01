@@ -1,5 +1,6 @@
 package sap.ass01.layered.presentation;
 
+import sap.ass01.layered.business.RidePlugin;
 import sap.ass01.layered.presentation.dialogs.AddEBikeDialog;
 import sap.ass01.layered.presentation.dialogs.AddUserDialog;
 import sap.ass01.layered.presentation.dialogs.RideDialog;
@@ -17,6 +18,7 @@ public class EBikeAppView extends JFrame implements ActionListener {
 
     private RideVisualisationPanel centralPanel;
     private JButton addUserButton;
+    private JButton registerPlugin;
     private JButton addEBikeButton;
     private JButton startRideButton;
     private final ServiceProvider serviceProvider;
@@ -36,9 +38,11 @@ public class EBikeAppView extends JFrame implements ActionListener {
         this.addUserButton = new JButton("Add User");
         this.addEBikeButton = new JButton("Add EBike");
         this.startRideButton = new JButton("Start Ride");
+        this.registerPlugin = new JButton("Register Plugin");
         this.configureButton(this.addUserButton, topPanel);
         this.configureButton(this.addEBikeButton, topPanel);
         this.configureButton(this.startRideButton, topPanel);
+        this.configureButton(this.registerPlugin, topPanel);
         this.add(topPanel, BorderLayout.NORTH);
 
         this.centralPanel = new RideVisualisationPanel(WIDTH, HEIGHT, this.serviceProvider);
@@ -70,6 +74,10 @@ public class EBikeAppView extends JFrame implements ActionListener {
             final RideDialog rd = new RideDialog(this, this.serviceProvider.getRideService());
             rd.attachObserver(this.serviceProvider.getRideService());
             rd.setVisible(true);
+        } else if (e.getSource() == this.registerPlugin) {
+            // Class loader
+            final RidePlugin plugin =
+            serviceProvider.getRideService().registerPlugin();
         }
     }
 }
