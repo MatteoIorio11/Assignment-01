@@ -1,2 +1,4 @@
-package it.unibo.sap.architectural;public class ArchitecturalTest {
+package it.unibo.sap.architectural;
+
+public class ArchitecturalTest {
 }
