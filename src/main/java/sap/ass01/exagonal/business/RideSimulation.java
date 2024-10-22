@@ -123,4 +123,9 @@ public class RideSimulation extends Thread implements ModelObserverSource, RideS
 	private void log(final String msg) {
 		System.out.println("[RideSimulation - " + this.ride.getId() + " ]: " + msg);
 	}
+
+	@Override
+	public Ride getRide() {
+		return this.ride;
+	}
 }

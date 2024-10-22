@@ -48,9 +48,8 @@ public class RideService extends AbstractObserverService<RideDTO, Ride> implemen
         this.ridez.put(ride.getId(), sim);
     }
 
-    public void applyEffects(final Ride ride, final String pluginID) {
-        RidePlugin p = this.ridePluginHashMap.get(pluginID);
-        p.applyEffect(ride);
+    public void applyEffects(final String pluginID) {
+        this.ridez.values().forEach(rs -> this.ridePluginHashMap.get(pluginID).applyEffect(rs.getRide()));
     }
 
     public void registerPlugin(final RidePlugin rideP, final String pluginID) {

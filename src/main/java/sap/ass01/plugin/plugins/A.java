@@ -1,7 +1,7 @@
-package sap.ass01.plugin;
+package sap.ass01.plugin.plugins;
 
-import sap.ass01.exagonal.business.Ride;
-import sap.ass01.exagonal.business.RidePlugin;
+import sap.ass01.plugin.Ride;
+import sap.ass01.plugin.RidePlugin;
 
 public class A implements RidePlugin {
     int c = 0;

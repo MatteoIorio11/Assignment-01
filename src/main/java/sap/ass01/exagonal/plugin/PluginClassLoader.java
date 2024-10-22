@@ -16,6 +16,7 @@ public class PluginClassLoader extends ClassLoader {
     protected Class<?> findClass(final String className) throws ClassNotFoundException {
         // Convert the class name to the expected path in the JAR
         final String classFile = className.replace('.', '/') + ".class";
+        System.err.println(classFile);
         final JarEntry entry = jarFile.getJarEntry(classFile);
 
         if (entry == null) {
