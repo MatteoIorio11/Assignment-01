@@ -11,14 +11,14 @@ import org.junit.runner.RunWith;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
 
 @RunWith(ArchUnitRunner.class)
-@AnalyzeClasses(packages = "src")
+@AnalyzeClasses(packages = "sap.ass01.exagonal")
 public class ArchitecturalTest {
-    private static final String BUSINESS_LAYER_PACKAGE = "..business..";
-    private static final String PERSISTENCE_LAYER_PACKAGE = "..persistence..";
-    private static final String PRESENTATION_LAYER_PACKAGE = "..presentation..";
-    private static final String SERVICE_LAYER_PACKAGE = "..service..";
+    private static final String BUSINESS_LAYER_PACKAGE = "sap.ass01.exagonal.business..";
+    private static final String PERSISTENCE_LAYER_PACKAGE = "sap.ass01.exagonal.persistence..";
+    private static final String PRESENTATION_LAYER_PACKAGE = "sap.ass01.exagonal.presentation..";
+    private static final String SERVICE_LAYER_PACKAGE = "sap.ass01.exagonal.service..";
 
-    JavaClasses importedClasses = new ClassFileImporter().importPackages("src");
+    JavaClasses importedClasses = new ClassFileImporter().importPackages("sap.ass01.exagonal");
 
     @ArchTest
     public static final ArchRule business_layer_should_not_depend_on_persistence =
@@ -27,8 +27,7 @@ public class ArchitecturalTest {
                     .resideInAPackage(BUSINESS_LAYER_PACKAGE)
                     .should()
                     .dependOnClassesThat()
-                    .resideInAPackage(PERSISTENCE_LAYER_PACKAGE)
-                    .allowEmptyShould(true);
+                    .resideInAPackage(PERSISTENCE_LAYER_PACKAGE);
     @ArchTest
     public static final ArchRule business_layer_should_not_depend_on_presentation =
             noClasses()
