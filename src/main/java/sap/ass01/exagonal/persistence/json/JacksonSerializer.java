@@ -3,7 +3,7 @@ package sap.ass01.exagonal.persistence.json;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
-import sap.ass01.exagonal.persistence.*;
+import sap.ass01.exagonal.business.Key;
 
 import java.io.File;
 import java.io.IOException;

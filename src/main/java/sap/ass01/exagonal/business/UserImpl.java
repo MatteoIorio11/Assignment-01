@@ -2,7 +2,6 @@ package sap.ass01.exagonal.business;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import sap.ass01.exagonal.persistence.Key;
 
 import java.util.Objects;
 
