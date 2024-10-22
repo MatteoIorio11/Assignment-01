@@ -1,4 +1,4 @@
-package sap.ass01.layered.persistence;
+package sap.ass01.layered.business;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
