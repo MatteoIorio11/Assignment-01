@@ -25,22 +25,23 @@ public class RideService extends AbstractObserverService<RideDTO, Ride> implemen
         final Optional<EBike> eBike = this.eBikeService.getById(newValue.bikeId());
         final List<Ride> rides = new ArrayList<>();
         if (user.isPresent() && eBike.isPresent()) {
-            this.repositories.forEach(repo -> {
-                final String id = repo.generateNewId();
-                final Ride newRide = new RideImpl(id, user.get(), eBike.get());
-                rides.add(newRide);
-                this.add(newRide);
-            });
-
-            // TODO: quite shitty
-            final Ride roba = rides.stream().findFirst().orElseThrow();
-            newValue.setId(roba.getId());
-            this.startRide(roba);
+            final User realUser = user.get();
+            final EBike realEbike = eBike.get();
+            if (realEbike.isAvailable() && realEbike.getBatteryLevel() > 0 && realUser.getCredit() > 0) {
+                this.repositories.forEach(repo -> {
+                    final String id = repo.generateNewId();
+                    final Ride newRide = new RideImpl(id, user.get(), eBike.get());
+                    rides.add(newRide);
+                    this.add(newRide);
+                });
+                final Ride roba = rides.stream().findFirst().orElseThrow();
+                newValue.setId(roba.getId());
+                this.startRide(roba);
+            }
         }
     }
 
     private void startRide(final Ride ride) {
-        // TODO: also quite shitty, a list of stuff then later filtered with `filterIsInstance` :\
         ride.getEBike().updateState(EBike.EBikeState.IN_USE);
         final var sim = ride.start(List.of(this, userService, eBikeService));
         this.ridez.put(ride.getId(), sim);
