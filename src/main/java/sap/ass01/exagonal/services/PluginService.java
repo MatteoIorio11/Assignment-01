@@ -12,8 +12,8 @@ public class PluginService {
     }
     public void loadRidePlugin(final File file) throws Exception {
         final PluginClassLoader loader = new PluginClassLoader(file.getAbsolutePath());
-        String className = "sap.ass01.plugin" + file.getName().replaceFirst(".jar","");
-        System.out.println(className);
+        String className = "sap.ass01.plugin." + file.getName().replaceFirst(".jar","");
+        System.out.println("Ciao, sono qui amore");
         Class<?> pluginClass = loader.loadClass(className);
         RidePlugin effectPlugin = (RidePlugin) pluginClass.getDeclaredConstructor(null).newInstance(null);
         this.serviceProvider.getRideService().registerPlugin(effectPlugin, file.getName().replaceFirst(".jar", ""));
