@@ -2,14 +2,17 @@ package sap.ass01.exagonal.presentation;
 
 
 import sap.ass01.exagonal.business.RidePlugin;
+import sap.ass01.exagonal.plugin.PluginClassLoader;
 import sap.ass01.exagonal.presentation.dialogs.AddEBikeDialog;
 import sap.ass01.exagonal.presentation.dialogs.AddUserDialog;
 import sap.ass01.exagonal.presentation.dialogs.RideDialog;
+import sap.ass01.exagonal.services.PluginService;
 import sap.ass01.exagonal.services.ServiceProvider;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 public class EBikeAppView extends JFrame implements ActionListener {
     public static final int WIDTH = 800;
@@ -21,6 +24,7 @@ public class EBikeAppView extends JFrame implements ActionListener {
     private JButton addEBikeButton;
     private JButton startRideButton;
     private final ServiceProvider serviceProvider;
+    final JPanel topPanel = new JPanel();
 
     public EBikeAppView(final ServiceProvider serviceProvider) {
         this.serviceProvider = serviceProvider;
@@ -33,7 +37,6 @@ public class EBikeAppView extends JFrame implements ActionListener {
         this.setResizable(false);
         this.setLayout(new BorderLayout());
 
-        final JPanel topPanel = new JPanel();
         this.addUserButton = new JButton("Add User");
         this.addEBikeButton = new JButton("Add EBike");
         this.startRideButton = new JButton("Start Ride");
@@ -74,9 +77,18 @@ public class EBikeAppView extends JFrame implements ActionListener {
             rd.attachObserver(this.serviceProvider.getRideService());
             rd.setVisible(true);
         } else if (e.getSource() == this.registerPlugin) {
-            // Class loader
-            final RidePlugin plugin = null;
-            serviceProvider.getRideService().registerPlugin(plugin, "CIAOOO MIAO");
+            var fileDialog = new JFileChooser(new File("plugins"));
+            int returnValue = fileDialog.showOpenDialog(null);
+            if (returnValue == JFileChooser.APPROVE_OPTION) {
+                File selectedFile = fileDialog.getSelectedFile();
+                PluginService p = new PluginService(serviceProvider);
+                try {
+                    p.loadRidePlugin(selectedFile);
+                    this.configureButton(new JButton("Apply Plugin: " + selectedFile.getName()), this.topPanel);
+                } catch (Exception o) {
+                    System.err.println(o.getMessage());
+                }
+            }
         }
     }
 }

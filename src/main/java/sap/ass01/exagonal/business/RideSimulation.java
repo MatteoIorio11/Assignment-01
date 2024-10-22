@@ -10,7 +10,7 @@ import sap.ass01.exagonal.services.UserService;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RideSimulation extends Thread implements ModelObserverSource {
+public class RideSimulation extends Thread implements ModelObserverSource, RideSimulationInterface {
 	
 	private final Ride ride;
 	private final User user;
