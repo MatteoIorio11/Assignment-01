@@ -1,6 +1,7 @@
 package sap.ass01.exagonal.presentation;
 
 
+import com.sun.source.util.Plugin;
 import sap.ass01.exagonal.business.RidePlugin;
 import sap.ass01.exagonal.plugin.PluginClassLoader;
 import sap.ass01.exagonal.presentation.dialogs.AddEBikeDialog;
@@ -41,10 +42,10 @@ public class EBikeAppView extends JFrame implements ActionListener {
         this.addEBikeButton = new JButton("Add EBike");
         this.startRideButton = new JButton("Start Ride");
         this.registerPlugin = new JButton("Register Plugin");
-        this.configureButton(this.addUserButton, topPanel);
-        this.configureButton(this.addEBikeButton, topPanel);
-        this.configureButton(this.startRideButton, topPanel);
-        this.configureButton(this.registerPlugin, topPanel);
+        this.configureButton(this.addUserButton);
+        this.configureButton(this.addEBikeButton);
+        this.configureButton(this.startRideButton);
+        this.configureButton(this.registerPlugin);
         this.add(topPanel, BorderLayout.NORTH);
 
         this.centralPanel = new RideVisualisationPanel(WIDTH, HEIGHT, this.serviceProvider);
@@ -53,9 +54,9 @@ public class EBikeAppView extends JFrame implements ActionListener {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
-    private void configureButton(final JButton btn, final JPanel parentPanel) {
+    private void configureButton(final JButton btn) {
         btn.addActionListener(this);
-        parentPanel.add(btn);
+        this.topPanel.add(btn);
     }
 
     public void display() {
@@ -77,23 +78,24 @@ public class EBikeAppView extends JFrame implements ActionListener {
             rd.attachObserver(this.serviceProvider.getRideService());
             rd.setVisible(true);
         } else if (e.getSource() == this.registerPlugin) {
-            var fileDialog = new JFileChooser(new File("."));
-            int returnValue = fileDialog.showOpenDialog(null);
-            if (returnValue == JFileChooser.APPROVE_OPTION) {
-                final File selectedFile = fileDialog.getSelectedFile();
-                final PluginService p = new PluginService(serviceProvider);
-                try {
-                    System.out.println("ciao");
-                    p.loadRidePlugin(selectedFile);
-                    final JButton button = new JButton("Apply Plugin: " + selectedFile.getName());
-                    button.addActionListener(i -> {
-                        this.serviceProvider.getRideService().applyEffects(selectedFile.getName());
-                    });
-                    this.configureButton(button, this.topPanel);
-                } catch (Exception o) {
-                    o.printStackTrace();
-                }
-            }
+            this.showPluginSelector();
         }
+    }
+
+    private void showPluginSelector() {
+        final var fileDialog = new JFileChooser(new File("."));
+        if (fileDialog.showOpenDialog(null) != JFileChooser.APPROVE_OPTION) {
+            return;
+        }
+
+        final File selectedFile = fileDialog.getSelectedFile();
+
+        if (!new PluginService(serviceProvider).loadRidePlugin(selectedFile)) {
+            return;
+        }
+
+        final JButton button = new JButton("Apply Plugin: " + selectedFile.getName());
+        button.addActionListener(i -> this.serviceProvider.getRideService().applyEffects(selectedFile.getName()));
+        this.topPanel.add(button);
     }
 }
