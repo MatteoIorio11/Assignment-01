@@ -17,7 +17,7 @@ public class JacksonSerializer<T, K> implements Serializer<T, K>{
     private final File file;
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final Class<T> typeClass;
-    private static final String RESOURCE_PATH = "src/main/resources/json/";
+    private static final String RESOURCE_PATH = "core/src/main/resources/json/";
 
     public JacksonSerializer(final Class<T> clazz) {
         this.objectMapper.registerModule(new Jdk8Module());
