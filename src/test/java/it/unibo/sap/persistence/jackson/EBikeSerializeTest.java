@@ -1,10 +1,10 @@
 package it.unibo.sap.persistence.jackson;
 
 import org.junit.jupiter.api.Test;
-import sap.ass01.layered.business.EBike;
-import sap.ass01.layered.business.EBikeImpl;
-import sap.ass01.layered.persistence.json.Serializer;
-import sap.ass01.layered.persistence.repositories.EBikeRepository;
+import sap.ass01.exagonal.business.EBike;
+import sap.ass01.exagonal.business.EBikeImpl;
+import sap.ass01.exagonal.persistence.json.Serializer;
+import sap.ass01.exagonal.persistence.repositories.EBikeRepository;
 
 import java.util.List;
 import java.util.Optional;
