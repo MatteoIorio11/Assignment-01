@@ -77,12 +77,13 @@ public class EBikeAppView extends JFrame implements ActionListener {
             rd.attachObserver(this.serviceProvider.getRideService());
             rd.setVisible(true);
         } else if (e.getSource() == this.registerPlugin) {
-            var fileDialog = new JFileChooser(new File("./plugins"));
+            var fileDialog = new JFileChooser(new File("."));
             int returnValue = fileDialog.showOpenDialog(null);
             if (returnValue == JFileChooser.APPROVE_OPTION) {
-                File selectedFile = fileDialog.getSelectedFile();
-                PluginService p = new PluginService(serviceProvider);
+                final File selectedFile = fileDialog.getSelectedFile();
+                final PluginService p = new PluginService(serviceProvider);
                 try {
+                    System.out.println("ciao");
                     p.loadRidePlugin(selectedFile);
                     final JButton button = new JButton("Apply Plugin: " + selectedFile.getName());
                     button.addActionListener(i -> {
@@ -90,7 +91,7 @@ public class EBikeAppView extends JFrame implements ActionListener {
                     });
                     this.configureButton(button, this.topPanel);
                 } catch (Exception o) {
-                    System.err.println(o.getMessage());
+                    o.printStackTrace();
                 }
             }
         }
