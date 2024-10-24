@@ -34,15 +34,13 @@ public class RideService extends AbstractObserverService<RideDTO, Ride> implemen
                 this.add(newRide);
             });
 
-            // TODO: quite shitty
-            final Ride roba = rides.stream().findFirst().orElseThrow();
-            newValue.setId(roba.getId());
-            this.startRide(roba);
+            final Ride ride = rides.stream().findFirst().orElseThrow();
+            newValue.setId(ride.getId());
+            this.startRide(ride);
         }
     }
 
     private void startRide(final Ride ride) {
-        // TODO: also quite shitty, a list of stuff then later filtered with `filterIsInstance` :\
         ride.getEBike().updateState(EBike.EBikeState.IN_USE);
         final var sim = ride.start(List.of(this, userService, eBikeService));
         this.ridez.put(ride.getId(), sim);
